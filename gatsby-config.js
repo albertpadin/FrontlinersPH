@@ -29,6 +29,21 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-plugin-firebase',
+      options: {
+        credentials: {
+          apiKey: 'AIzaSyA_JI94Qg3aFRY09D47-PEgF49QzhQJUaE',
+          authDomain: 'frontliners-ph.firebaseapp.com',
+          databaseURL: 'https://frontliners-ph.firebaseio.com',
+          projectId: 'frontliners-ph',
+          storageBucket: 'frontliners-ph.appspot.com',
+          messagingSenderId: '482280221163',
+          appId: '1:482280221163:web:901d56be0c04e9fd4011ae',
+          measurementId: 'G-X6G901TLVV',
+        },
+      },
+    },
+    {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
         alias: {
