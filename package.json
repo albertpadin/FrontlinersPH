@@ -1,7 +1,7 @@
 {
   "name": "frontlinersph",
   "private": true,
-  "description": "Supporting Frontliners fighting COVID-19 in the Philippines",
+  "description": "Supporting frontliners fighting COVID-19 in the Philippines",
   "version": "1.0.0",
   "author": "Albert Padin (albert@symph.co)",
   "dependencies": {
