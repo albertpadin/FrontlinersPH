@@ -43,7 +43,10 @@ collection: locations
         - name: <string>
         - address.city: <string>
         - address.province: <string>
-    - author: <string>              # Firebase auth user ID
+    - author: <object>
+        - id: <string>              # Firebase auth user ID
+        - name: <string>            # Obtained from Firebase auth user info
+        - photoURL: <string>        # Obtained from Firebase auth user info
     - created_at: <timestamp>       # Use server timestamp
 ```
 
@@ -75,7 +78,6 @@ collection: need_requests
         "FACE_SHIELDS",
         "SUITS",
         "RAW_MATERIALS",
-        "PEOPLE",
         "OTHER",
         "CASH"
     ]
@@ -100,7 +102,10 @@ collection: need_requests
         - unit: <enum>
         - date_needed: <date>
         - details: <string>
-    - author: <string>              # Firebase auth user ID
+    - author: <object>
+        - id: <string>              # Firebase auth user ID
+        - name: <string>            # Obtained from Firebase auth user info
+        - photoURL: <string>        # Obtained from Firebase auth user info
     - created_at: <timestamp>       # Use server timestamp
 ```
 
@@ -134,7 +139,6 @@ collection: need_commitments
         "FACE_SHIELDS",
         "SUITS",
         "RAW_MATERIALS",
-        "PEOPLE",
         "OTHER",
         "CASH"
     ]
