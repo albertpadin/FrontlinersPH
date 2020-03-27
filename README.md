@@ -2,7 +2,7 @@
 Supporting Frontliners fighting COVID
 
 
-Inspired by https://bangonph.com
+Inspired by http://www.bangonph.com/
 
 
 Main functionality:
