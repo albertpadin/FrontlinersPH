@@ -1,6 +1,10 @@
 # FrontlinersPH
 Supporting Frontliners fighting COVID
 
+
+Inspired by https://bangonph.com
+
+
 Main functionality:
 
 - Post Needs
