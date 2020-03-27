@@ -42,5 +42,13 @@
   },
   "bugs": {
     "url": "https://github.com/albertpadin/FrontlinersPH/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,html,md}": "prettier --write"
   }
 }
