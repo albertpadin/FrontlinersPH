@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 import {
   Button,
@@ -14,6 +14,7 @@ import Image from '@components/image';
 import SEO from '@components/seo';
 import style from './index.module.css';
 import LocationCard from '../components/location-card';
+import LocationFormModal from '../components/location-form-modal';
 
 const IndexPage = () => {
   // TODO: Demo only, to check if firebase gets loaded properly.
@@ -21,6 +22,13 @@ const IndexPage = () => {
   useEffect(() => {
     console.log(firebase);
   }, []);
+
+  const [isShowLocationModal, setIsShowLocationModal] = useState(false);
+  const toggleLocationModal = () => {
+    console.log('here');
+    setIsShowLocationModal(!isShowLocationModal);
+    console.log(isShowLocationModal);
+  };
 
   const locations_sample = [
     {
@@ -87,12 +95,10 @@ const IndexPage = () => {
           <Image />
         </Col>
         <Col xs={12} md={{ size: '5', offset: 1 }} className="mt-5">
-          {/* <h1>2,000,123</h1>
-          <h4>PPEs Donated</h4> */}
           <h1 className="mb-5">
             Help as much as you can. Ask for help if needed.
           </h1>
-          <Button outline color="primary" block>
+          <Button outline color="primary" onClick={toggleLocationModal} block>
             Add location
           </Button>
           <Button outline color="primary" block>
@@ -114,6 +120,10 @@ const IndexPage = () => {
         </Col>
       </Row>
       <Row className="mt-5">{locationCards}</Row>
+      <LocationFormModal
+        isShow={isShowLocationModal}
+        toggle={toggleLocationModal}
+      />
     </Layout>
   );
 };
