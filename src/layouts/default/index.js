@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
+import firebase from 'gatsby-plugin-firebase';
 
 import '@styles/global.css';
 import Header from '@components/header';
 import style from './styles.module.css';
+import { SiteTitleQuery } from '@src/queries';
+import { FirebaseUserContext } from '@src/contexts';
 
 const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `);
+  const data = SiteTitleQuery();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
+  }, [firebase]);
 
   return (
-    <>
+    <FirebaseUserContext.Provider value={user}>
       <Header siteTitle={data.site.siteMetadata.title} />
       <div className={style.wrapper}>
         <main>{children}</main>
@@ -27,7 +26,7 @@ const Layout = ({ children }) => {
           <a href="https://www.gatsbyjs.org">Gatsby</a>
         </footer>
       </div>
-    </>
+    </FirebaseUserContext.Provider>
   );
 };
 
