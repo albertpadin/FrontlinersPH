@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 
+import Layout from '@layouts/default';
+import SEO from '@components/seo';
 import LocationNeedsTable from '@components/location-needs-table';
 
 const getLocationData = async id => {
@@ -46,10 +48,12 @@ const LocationTemplate = ({ location }) => {
   }, [id]);
 
   return (
-    <>
+    <Layout>
+      <SEO title={data ? data.data.name : 'Location'} />
+
       <h1>{data ? data.data.name : 'Loading...'}</h1>
       {needs && <LocationNeedsTable needs={needs} />}
-    </>
+    </Layout>
   );
 };
 

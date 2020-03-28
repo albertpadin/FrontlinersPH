@@ -66,7 +66,7 @@ collection: locations
 **Firebase data model**
 
 ```
-collection: need_requests
+collection: requests
 
 - data: <object>                        # Just a copy of the latest item in `revisions`
     - location: <string>                # Firebase ID for location data
@@ -128,7 +128,7 @@ collection: need_requests
 **Firebase data model**
 
 ```
-collection: need_commitments
+collection: commitments
 
 - data: <object>                        # Just a copy of the latest item in `revisions`
     - location: <string>                # Firebase ID for location data
