@@ -41,7 +41,7 @@ const LocationTemplate = ({ location }) => {
       const needs = await getLocationNeeds(id);
       setNeeds(needs);
     })();
-  }, [firebase, id]);
+  }, [id]);
 
   return (
     <>

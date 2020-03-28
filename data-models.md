@@ -85,7 +85,7 @@ collection: need_requests
         "PESOS",
         "KG"
     ],
-    - date_needed: <date>
+    - date: <date>                      # Date needed
     - details: <string>                 # Provide more info about the request, e.g. what raw
                                         # materials are needed, etc.
 - author: <object>                      # Just a copy of the latest item in `revisions`
@@ -103,7 +103,7 @@ collection: need_requests
         - type: <enum>
         - quantity: <number>
         - unit: <enum>
-        - date_needed: <date>
+        - date: <date>                  # Date needed
         - details: <string>
     - author: <object>
         - id: <string>                  # Firebase auth user ID
@@ -120,7 +120,7 @@ collection: need_requests
 | type                | Type                   | Select          |
 | quantity            | Quantity               | Number          |
 | unit                | Unit (e.g. pieces, kg) | Select          |
-| date_needed         | Date needed            | Date            |
+| date                | Date needed            | Date            |
 | details             | Additional details     | Textarea        |
 
 ## NEED COMMITMENT
@@ -147,7 +147,8 @@ collection: need_commitments
         "PESOS",
         "KG"
     ],
-    - delivery_date: <date>
+    - date: <date>                      # Delivery date
+    - provider: <string>
     - details: <string>                 # Provide more info about the request, e.g. what raw
                                         # materials will be provided, etc.
   - author: <object>                    # Just a copy of the latest item in `revisions`
@@ -165,7 +166,7 @@ collection: need_commitments
         - type: <enum>
         - quantity: <number>
         - unit: <enum>
-        - delivery_date: <date>
+        - date: <date>
         - details: <string>
     - author: <string>                  # Firebase auth user ID
     - created_at: <timestamp>           # Use server timestamp
@@ -179,5 +180,5 @@ collection: need_commitments
 | type                | Type                   | Select          |
 | quantity            | Quantity               | Number          |
 | unit                | Unit (e.g. pieces, kg) | Select          |
-| delivery_date       | Delivery date          | Date            |
+| date                | Delivery date          | Date            |
 | details             | Additional details     | Textarea        |

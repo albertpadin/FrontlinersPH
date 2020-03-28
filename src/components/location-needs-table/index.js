@@ -1,23 +1,16 @@
 import React from 'react';
 import format from 'date-fns/format';
 
-const LocationNeedsTableRow = ({ need }) => {
-  const date =
-    need.type === 'REQUEST'
-      ? new Date(need.data.date_needed)
-      : new Date(need.data.delivery_date);
-
-  return (
-    <tr>
-      <td>{need.data.type}</td>
-      <td>
-        {need.data.quantity} {need.data.unit}
-      </td>
-      <td>{format(date, 'MMMM d, yyyy')}</td>
-      <td>{need.data.details}</td>
-    </tr>
-  );
-};
+const LocationNeedsTableRow = ({ need }) => (
+  <tr>
+    <td>{need.data.type}</td>
+    <td>
+      {need.data.quantity} {need.data.unit}
+    </td>
+    <td>{format(need.data.date, 'MMMM d, yyyy')}</td>
+    <td>{need.data.details}</td>
+  </tr>
+);
 
 const LocationNeedsTable = ({ needs }) => (
   <table>
