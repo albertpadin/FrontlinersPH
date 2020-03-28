@@ -9,35 +9,32 @@ Firebase data models for FrontlinersPH.
 ```
 collection: locations
 
-- latest_revision                       # Readonly field. App clients should display information
-                                        # stored in this field.
+- data: <object>                        # Just a copy of the latest item in `revisions`
+    - type: <enum> [
+        "HOSPITAL",
+        "PRODUCTION_HUB",
+        "KITCHEN",
+        "QUARANTINE_AREA",
+        "FRONTLINERS_ACCOMMODATION"
+    ]
+    - name: <string>
+    - address: <object>
+        - city: <string>                # City or municipality?
+        - province: <string>
+- author: <object>                      # Just a copy of the latest item in `revisions`
+    - id: <string>
+    - name: <string>
+    - photoURL: <string>
+- created_at: <timestamp>               # Just a copy of the latest item in `revisions`
 
-    - data: <object>                    # Just a copy of the latest item in `revisions`
-        - type: <enum> [
-            "HOSPITAL",
-            "PRODUCTION_HUB",
-            "KITCHEN",
-            "QUARANTINE_AREA",
-            "FRONTLINERS_ACCOMMODATION"
-        ]
-        - name: <string>
-        - address: <object>
-            - city: <string>            # City or municipality?
-            - province: <string>
-    - author: <object>                  # Just a copy of the latest item in `revisions`
-        - id: <string>
-        - name: <string>
-        - photoURL: <string>
-    - created_at: <timestamp>           # Just a copy of the latest item in `revisions`
-
-    - statistics                        # Readonly summary of requests/commitments for this location.
+- statistics                            # Readonly summary of requests/commitments for this location.
                                         # Contains a key for each type of need?
-        - meals:
-          - total_requested: <number>
-          - total_commited: <number>
-        - face_masks:
-          - total_requested: <number>
-          - total_commited: <number>
+    - meals:
+      - total_requested: <number>
+      - total_commited: <number>
+    - face_masks:
+      - total_requested: <number>
+      - total_commited: <number>
 
 - revisions: <subcollection>            # Private subcollection, only allow create operations.
                                         # We can have a cloud function to take the latest item
@@ -71,34 +68,31 @@ collection: locations
 ```
 collection: need_requests
 
-- latest_revision:                      # Readonly field. App clients should display information
-                                        # stored in this field.
-
-    - data: <object>                    # Just a copy of the latest item in `revisions`
-        - location: <string>            # Firebase ID for location data
-        - type: <enum> [
-            "MEALS",
-            "FACE_MASKS",
-            "FACE_SHIELDS",
-            "SUITS",
-            "RAW_MATERIALS",
-            "OTHER",
-            "CASH"
-        ]
-        - quantity: <number>
-        - unit: <enum> [                # Need more units. Makes it easier to accurately
-            "PIECES",                   # aggregate data in Firebase.
-            "PESOS",
-            "KG"
-        ],
-        - date_needed: <date>
-        - details: <string>             # Provide more info about the request, e.g. what raw
+- data: <object>                        # Just a copy of the latest item in `revisions`
+    - location: <string>                # Firebase ID for location data
+    - type: <enum> [
+        "MEALS",
+        "FACE_MASKS",
+        "FACE_SHIELDS",
+        "SUITS",
+        "RAW_MATERIALS",
+        "OTHER",
+        "CASH"
+    ]
+    - quantity: <number>
+    - unit: <enum> [                    # Need more units. Makes it easier to accurately
+        "PIECES",                       # aggregate data in Firebase.
+        "PESOS",
+        "KG"
+    ],
+    - date_needed: <date>
+    - details: <string>                 # Provide more info about the request, e.g. what raw
                                         # materials are needed, etc.
-    - author: <object>                  # Just a copy of the latest item in `revisions`
-        - id: <string>
-        - name: <string>
-        - photoURL: <string>
-    - created_at: <timestamp>           # Just a copy of the latest item in `revisions`
+- author: <object>                      # Just a copy of the latest item in `revisions`
+    - id: <string>
+    - name: <string>
+    - photoURL: <string>
+- created_at: <timestamp>               # Just a copy of the latest item in `revisions`
 
 - revisions: <subcollection>            # Private subcollection, only allow create operations.
                                         # We can have a cloud function to take the latest item
@@ -136,34 +130,31 @@ collection: need_requests
 ```
 collection: need_commitments
 
-- latest_revision:                      # Readonly field. App clients should display information
-                                        # stored in this field.
-
-    - data: <object>                    # Just a copy of the latest item in `revisions`
-        - location: <string>            # Firebase ID for location data
-        - type: <enum> [
-            "MEALS",
-            "FACE_MASKS",
-            "FACE_SHIELDS",
-            "SUITS",
-            "RAW_MATERIALS",
-            "OTHER",
-            "CASH"
-        ]
-        - quantity: <number>
-        - unit: <enum> [                # Need more units. Makes it easier to accurately
-            "PIECES",                   # aggregate data in Firebase.
-            "PESOS",
-            "KG"
-        ],
-        - delivery_date: <date>
-        - details: <string>             # Provide more info about the request, e.g. what raw
+- data: <object>                        # Just a copy of the latest item in `revisions`
+    - location: <string>                # Firebase ID for location data
+    - type: <enum> [
+        "MEALS",
+        "FACE_MASKS",
+        "FACE_SHIELDS",
+        "SUITS",
+        "RAW_MATERIALS",
+        "OTHER",
+        "CASH"
+    ]
+    - quantity: <number>
+    - unit: <enum> [                    # Need more units. Makes it easier to accurately
+        "PIECES",                       # aggregate data in Firebase.
+        "PESOS",
+        "KG"
+    ],
+    - delivery_date: <date>
+    - details: <string>                 # Provide more info about the request, e.g. what raw
                                         # materials will be provided, etc.
-      - author: <object>                # Just a copy of the latest item in `revisions`
-        - id: <string>
-        - name: <string>
-        - photoURL: <string>
-    - created_at: <timestamp>           # Just a copy of the latest item in `revisions`
+  - author: <object>                    # Just a copy of the latest item in `revisions`
+    - id: <string>
+    - name: <string>
+    - photoURL: <string>
+- created_at: <timestamp>               # Just a copy of the latest item in `revisions`
 
 - revisions: <subcollection>            # Private subcollection, only allow create operations.
                                         # We can have a cloud function to take the latest item
