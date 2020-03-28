@@ -6,6 +6,7 @@ import Layout from '@layouts/default';
 import SEO from '@components/seo';
 import RequestsTable from '@components/requests-table';
 import CommitmentsTable from '@components/commitments-table';
+import LocationStatistics from '@components/location-statistics';
 
 const getLocationData = async id => {
   const snapshot = await firebase
@@ -60,6 +61,7 @@ const LocationTemplate = ({ location }) => {
       <SEO title={data ? data.data.name : 'Location'} />
 
       <h1>{data ? data.data.name : 'Loading...'}</h1>
+      {data && <LocationStatistics data={data.statistics} />}
 
       <h2>Requests</h2>
       {requests && <RequestsTable data={requests} />}
