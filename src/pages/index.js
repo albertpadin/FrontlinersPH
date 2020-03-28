@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 import {
   Button,
@@ -16,76 +16,36 @@ import style from './index.module.css';
 import LocationCard from '../components/location-card';
 import LocationFormModal from '../components/location-form-modal';
 
-const IndexPage = () => {
-  // TODO: Demo only, to check if firebase gets loaded properly.
-  // Please remove when working on implementing this page already, thanks!
-  useEffect(() => {
-    console.log(firebase);
-  }, []);
+const getLocations = async () => {
+  const snapshot = await firebase
+    .firestore()
+    .collection('locations')
+    .get();
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
 
+const IndexPage = () => {
+  const [locations, setLocations] = useState(null);
   const [isShowLocationModal, setIsShowLocationModal] = useState(false);
+
+  useEffect(() => {
+    getLocations().then(setLocations);
+  }, [firebase]);
+
   const toggleLocationModal = () => {
     console.log('here');
     setIsShowLocationModal(!isShowLocationModal);
     console.log(isShowLocationModal);
   };
 
-  const locations_sample = [
-    {
-      data: {
-        name: 'Chong Hua Hospital',
-        address: 'Mandaue City, Cebu',
-      },
-      statistics: {
-        meals: {
-          total_requested: 123,
-          total_commited: 456,
-        },
-        face_masks: {
-          total_requested: 123,
-          total_commited: 456,
-        },
-      },
-    },
-    {
-      data: {
-        name: 'Vicente Sotto Hospital',
-        address: 'Cebu City, Cebu',
-      },
-      statistics: {
-        meals: {
-          total_requested: 100,
-          total_commited: 213,
-        },
-        face_masks: {
-          total_requested: 153,
-          total_commited: 446,
-        },
-      },
-    },
-    {
-      data: {
-        name: 'Mactan Doctors Hospital',
-        address: 'Lapu-lapu City, Cebu',
-      },
-      statistics: {
-        meals: {
-          total_requested: 100,
-          total_commited: 213,
-        },
-        face_masks: {
-          total_requested: 153,
-          total_commited: 446,
-        },
-      },
-    },
-  ];
-
-  const locationCards = locations_sample.map(({ data, statistics }) => (
-    <Col>
-      <LocationCard location={data.name} statistics={statistics} />
-    </Col>
-  ));
+  let locationCards = null;
+  if (locations) {
+    locationCards = locations.map(({ data, statistics }) => (
+      <Col>
+        <LocationCard location={data.name} statistics={statistics} />
+      </Col>
+    ));
+  }
 
   return (
     <Layout>
