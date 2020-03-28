@@ -5,6 +5,7 @@ import firebase from 'gatsby-plugin-firebase';
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
 import RequestsTable from '@components/requests-table';
+import CommitmentsTable from '@components/commitments-table';
 
 const getLocationData = async id => {
   const snapshot = await firebase
@@ -23,28 +24,35 @@ const getLocationRequests = async id => {
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
 
+const getLocationCommitments = async id => {
+  const snapshot = await firebase
+    .firestore()
+    .collection('commitments')
+    .where('data.location', '==', id)
+    .get();
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
 const LocationTemplate = ({ location }) => {
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
+  const [commitments, setCommitments] = useState(null);
   const [_, id] = location.pathname.match(/\/location\/(\w+)/);
 
   useEffect(() => {
-    (async () => {
-      if (!id) {
-        return navigate('/404');
-      }
+    if (!id) {
+      return navigate('/404');
+    }
 
-      const [locationData, locationNeeds] = await Promise.all([
-        getLocationData(id),
-        getLocationRequests(id),
-      ]);
-
+    getLocationData(id).then(locationData => {
       if (!locationData) {
         return navigate('/404');
       }
       setData(locationData);
-      setRequests(locationNeeds);
-    })();
+    });
+
+    getLocationRequests(id).then(setRequests);
+    getLocationCommitments(id).then(setCommitments);
   }, [id]);
 
   return (
@@ -52,7 +60,12 @@ const LocationTemplate = ({ location }) => {
       <SEO title={data ? data.data.name : 'Location'} />
 
       <h1>{data ? data.data.name : 'Loading...'}</h1>
-      {requests && <RequestsTable needs={requests} />}
+
+      <h2>Requests</h2>
+      {requests && <RequestsTable data={requests} />}
+
+      <h2>Commitments</h2>
+      {commitments && <CommitmentsTable data={commitments} />}
     </Layout>
   );
 };

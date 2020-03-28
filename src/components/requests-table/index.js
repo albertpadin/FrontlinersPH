@@ -12,19 +12,19 @@ const RequestsTableRow = ({ request }) => (
   </tr>
 );
 
-const RequestsTable = ({ requests }) => (
+const RequestsTable = ({ data }) => (
   <table>
     <thead>
       <tr>
         <th>Type</th>
         <th>Quantity</th>
-        <th>Date needed / Delivery date</th>
+        <th>Date needed</th>
         <th>Details</th>
       </tr>
     </thead>
 
     <tbody>
-      {requests.map(request => (
+      {data.map(request => (
         <RequestsTableRow key={request.id} request={request} />
       ))}
     </tbody>
