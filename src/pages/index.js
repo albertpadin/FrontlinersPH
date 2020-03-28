@@ -13,6 +13,7 @@ import Layout from '@layouts/default';
 import Image from '@components/image';
 import SEO from '@components/seo';
 import style from './index.module.css';
+import LocationCard from '../components/location-card';
 
 const IndexPage = () => {
   // TODO: Demo only, to check if firebase gets loaded properly.
@@ -21,23 +22,78 @@ const IndexPage = () => {
     console.log(firebase);
   }, []);
 
+  const locations_sample = [
+    {
+      data: {
+        name: 'Chong Hua Hospital',
+        address: 'Mandaue City, Cebu',
+      },
+      statistics: {
+        meals: {
+          total_requested: 123,
+          total_commited: 456,
+        },
+        face_masks: {
+          total_requested: 123,
+          total_commited: 456,
+        },
+      },
+    },
+    {
+      data: {
+        name: 'Vicente Sotto Hospital',
+        address: 'Cebu City, Cebu',
+      },
+      statistics: {
+        meals: {
+          total_requested: 100,
+          total_commited: 213,
+        },
+        face_masks: {
+          total_requested: 153,
+          total_commited: 446,
+        },
+      },
+    },
+    {
+      data: {
+        name: 'Mactan Doctors Hospital',
+        address: 'Lapu-lapu City, Cebu',
+      },
+      statistics: {
+        meals: {
+          total_requested: 100,
+          total_commited: 213,
+        },
+        face_masks: {
+          total_requested: 153,
+          total_commited: 446,
+        },
+      },
+    },
+  ];
+
+  const locationCards = locations_sample.map(({ data, statistics }) => (
+    <Col>
+      <LocationCard location={data.name} statistics={statistics} />
+    </Col>
+  ));
+
   return (
     <Layout>
       <SEO title="Home" />
-      <Row>
-        <Col>
+      <Row className={style.main}>
+        <Col xs={12} md={6}>
           <Image />
         </Col>
-        <Col>
-          <h1>2,000,123</h1>
-          <h4>PPEs Donated</h4>
-          <p>
-            Help as much as you can. Ask for help if needed. Something like
-            that. Help as much as you can. Ask for help if needed. Something
-            like that.
-          </p>
+        <Col xs={12} md={{ size: '5', offset: 1 }} className="mt-5">
+          {/* <h1>2,000,123</h1>
+          <h4>PPEs Donated</h4> */}
+          <h1 className="mb-5">
+            Help as much as you can. Ask for help if needed.
+          </h1>
           <Button outline color="primary" block>
-            Add Location
+            Add location
           </Button>
           <Button outline color="primary" block>
             Request donations
@@ -47,7 +103,7 @@ const IndexPage = () => {
           </Button>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-5">
         <Col>
           <InputGroup>
             <Input placeholder="Type a location" />
@@ -57,6 +113,7 @@ const IndexPage = () => {
           </InputGroup>
         </Col>
       </Row>
+      <Row className="mt-5">{locationCards}</Row>
     </Layout>
   );
 };

@@ -17,3 +17,21 @@
   color: white;
   text-decoration: none;
 }
+
+.siteTitle {
+  color: #36363f;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+  text-transform: uppercase;
+}
+
+.transparentNavbar {
+  background-color: transparent;
+}
+
+@media only screen and (max-width: 320px) {
+  .siteTitle {
+    font-size: 1.25rem;
+  }
+}

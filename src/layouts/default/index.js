@@ -21,12 +21,12 @@ const Layout = ({ children }) => {
 
   return (
     <FirebaseUserContext.Provider value={user}>
-      <Container>
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <div className={style.wrapper}>
+      <Header siteTitle={data.site.siteMetadata.title} />
+      <div className={style.wrapper}>
+        <Container>
           <main>{children}</main>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </FirebaseUserContext.Provider>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Button } from 'reactstrap';
 
 import { FirebaseUserContext } from '@src/contexts';
 
@@ -6,13 +7,13 @@ const AuthButton = ({ onLogin, onLogout, loading }) => {
   const user = useContext(FirebaseUserContext);
 
   return user ? (
-    <button onClick={onLogout} disabled={loading}>
+    <Button color="primary" onClick={onLogout} disabled={loading}>
       Logout
-    </button>
+    </Button>
   ) : (
-    <button onClick={onLogin} disabled={loading}>
+    <Button color="primary" onClick={onLogin} disabled={loading}>
       Login with Facebook
-    </button>
+    </Button>
   );
 };
 

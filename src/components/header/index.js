@@ -11,11 +11,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
+  Container,
 } from 'reactstrap';
 
 import AuthButton from '@components/auth-button';
@@ -41,22 +37,26 @@ const Header = ({ siteTitle }) => {
   };
 
   return (
-    <Navbar color="light" light expand="md">
-      <NavbarBrand href="/">#FrontlinersPH</NavbarBrand>
-      <NavbarToggler onClick={toggle} />
-      <Collapse isOpen={isOpen} navbar>
-        <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink href="/">Recent Commitments</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/">Recent Requests</NavLink>
-          </NavItem>
-          <NavItem>
-            <AuthButton loading={loading} onLogin={login} onLogout={logout} />
-          </NavItem>
-        </Nav>
-      </Collapse>
+    <Navbar light expand="md" className={style.transparentNavbar}>
+      <Container>
+        <NavbarBrand className={style.siteTitle} href="/">
+          #FrontlinersPH
+        </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink href="/">Recent Commitments</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/">Recent Requests</NavLink>
+            </NavItem>
+            <NavItem>
+              <AuthButton loading={loading} onLogin={login} onLogout={logout} />
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Container>
     </Navbar>
   );
 };
