@@ -3,11 +3,29 @@ import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText,
+} from 'reactstrap';
+
 import AuthButton from '@components/auth-button';
 import style from './styles.module.css';
 
 const Header = ({ siteTitle }) => {
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 
   const login = async () => {
     setLoading(true);
@@ -23,17 +41,23 @@ const Header = ({ siteTitle }) => {
   };
 
   return (
-    <header className={style.header}>
-      <div className={style.wrapper}>
-        <h1 className={style.heading}>
-          <Link to="/" className={style.link}>
-            {siteTitle}
-          </Link>
-        </h1>
-
-        <AuthButton loading={loading} onLogin={login} onLogout={logout} />
-      </div>
-    </header>
+    <Navbar color="light" light expand="md">
+      <NavbarBrand href="/">#FrontlinersPH</NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink href="/">Recent Commitments</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/">Recent Requests</NavLink>
+          </NavItem>
+          <NavItem>
+            <AuthButton loading={loading} onLogin={login} onLogout={logout} />
+          </NavItem>
+        </Nav>
+      </Collapse>
+    </Navbar>
   );
 };
 

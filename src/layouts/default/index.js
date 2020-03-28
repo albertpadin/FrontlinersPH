@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'gatsby-plugin-firebase';
+import { Container } from 'reactstrap';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '@styles/global.css';
 import Header from '@components/header';
@@ -18,14 +21,12 @@ const Layout = ({ children }) => {
 
   return (
     <FirebaseUserContext.Provider value={user}>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div className={style.wrapper}>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with{' '}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
+      <Container>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <div className={style.wrapper}>
+          <main>{children}</main>
+        </div>
+      </Container>
     </FirebaseUserContext.Provider>
   );
 };
