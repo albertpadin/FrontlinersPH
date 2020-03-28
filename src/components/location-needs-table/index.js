@@ -7,7 +7,7 @@ const LocationNeedsTableRow = ({ need }) => (
     <td>
       {need.data.quantity} {need.data.unit}
     </td>
-    <td>{format(need.data.date, 'MMMM d, yyyy')}</td>
+    <td>{format(new Date(need.data.date), 'MMMM d, yyyy')}</td>
     <td>{need.data.details}</td>
   </tr>
 );

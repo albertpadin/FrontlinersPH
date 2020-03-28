@@ -32,14 +32,16 @@ const LocationTemplate = ({ location }) => {
         return navigate('/404');
       }
 
-      const locationData = await getLocationData(id);
+      const [locationData, locationNeeds] = await Promise.all([
+        getLocationData(id),
+        getLocationNeeds(id),
+      ]);
+
       if (!locationData) {
         return navigate('/404');
       }
       setData(locationData);
-
-      const needs = await getLocationNeeds(id);
-      setNeeds(needs);
+      setNeeds(locationNeeds);
     })();
   }, [id]);
 
