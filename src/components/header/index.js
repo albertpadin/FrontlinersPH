@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 
+import AuthButton from '@components/auth-button';
 import style from './styles.module.css';
-import { FirebaseUserContext } from '@src/contexts';
 
 const Header = ({ siteTitle }) => {
-  const user = useContext(FirebaseUserContext);
   const [loading, setLoading] = useState(false);
 
   const login = async () => {
@@ -23,17 +22,6 @@ const Header = ({ siteTitle }) => {
     setLoading(false);
   };
 
-  const AuthButton = () =>
-    user ? (
-      <button onClick={logout} disabled={loading}>
-        Logout
-      </button>
-    ) : (
-      <button onClick={login} disabled={loading}>
-        Login with Facebook
-      </button>
-    );
-
   return (
     <header className={style.header}>
       <div className={style.wrapper}>
@@ -43,7 +31,7 @@ const Header = ({ siteTitle }) => {
           </Link>
         </h1>
 
-        <AuthButton />
+        <AuthButton loading={loading} onLogin={login} onLogout={logout} />
       </div>
     </header>
   );
