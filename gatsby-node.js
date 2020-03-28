@@ -6,6 +6,6 @@ exports.createPages = ({ actions }) => {
   createPage({
     path: '/location',
     matchPath: '/location/:id',
-    component: path.resolve('src/templates/location.js'),
+    component: path.resolve('src/page-templates/location.js'),
   });
 };

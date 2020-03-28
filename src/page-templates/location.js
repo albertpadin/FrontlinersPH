@@ -4,7 +4,7 @@ import firebase from 'gatsby-plugin-firebase';
 
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
-import LocationNeedsTable from '@components/location-needs-table';
+import RequestsTable from '@components/requests-table';
 
 const getLocationData = async id => {
   const snapshot = await firebase
@@ -14,10 +14,10 @@ const getLocationData = async id => {
   return snapshot.data();
 };
 
-const getLocationNeeds = async id => {
+const getLocationRequests = async id => {
   const snapshot = await firebase
     .firestore()
-    .collection('needs')
+    .collection('requests')
     .where('data.location', '==', id)
     .get();
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -25,7 +25,7 @@ const getLocationNeeds = async id => {
 
 const LocationTemplate = ({ location }) => {
   const [data, setData] = useState(null);
-  const [needs, setNeeds] = useState(null);
+  const [requests, setRequests] = useState(null);
   const [_, id] = location.pathname.match(/\/location\/(\w+)/);
 
   useEffect(() => {
@@ -36,14 +36,14 @@ const LocationTemplate = ({ location }) => {
 
       const [locationData, locationNeeds] = await Promise.all([
         getLocationData(id),
-        getLocationNeeds(id),
+        getLocationRequests(id),
       ]);
 
       if (!locationData) {
         return navigate('/404');
       }
       setData(locationData);
-      setNeeds(locationNeeds);
+      setRequests(locationNeeds);
     })();
   }, [id]);
 
@@ -52,7 +52,7 @@ const LocationTemplate = ({ location }) => {
       <SEO title={data ? data.data.name : 'Location'} />
 
       <h1>{data ? data.data.name : 'Loading...'}</h1>
-      {needs && <LocationNeedsTable needs={needs} />}
+      {requests && <RequestsTable needs={requests} />}
     </Layout>
   );
 };
