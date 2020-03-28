@@ -7,6 +7,7 @@ import SEO from '@components/seo';
 import RequestsTable from '@components/requests-table';
 import CommitmentsTable from '@components/commitments-table';
 import LocationStatistics from '@components/location-statistics';
+import CommitmentForm from '@components/commitment-form';
 
 const getLocationData = async id => {
   const snapshot = await firebase
@@ -68,6 +69,9 @@ const LocationTemplate = ({ location }) => {
 
       <h2>Commitments</h2>
       {commitments && <CommitmentsTable data={commitments} />}
+
+      <h2>New Commitment</h2>
+      <CommitmentForm location={id} />
     </Layout>
   );
 };
