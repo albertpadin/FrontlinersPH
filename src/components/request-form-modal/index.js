@@ -28,14 +28,7 @@ const RequestFormModal = ({ isShow, toggle }) => {
     setLoading(true);
 
     const newRequest = {
-      data: {
-        name: data.name,
-        type: data.type,
-        quantity: data.quantity,
-        unit: data.unit,
-        date: data.date,
-        details: data.details,
-      },
+      data,
       author: {
         id: user.uid,
         name: user.displayName,

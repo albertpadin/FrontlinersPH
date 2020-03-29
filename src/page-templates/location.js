@@ -13,6 +13,7 @@ import LocationStatistics from '@components/location-statistics';
 import CommitmentForm from '@components/commitment-form';
 import Loader from '../components/loader';
 import style from './styles.module.css';
+import RequestFormModal from '../components/request-form-modal';
 
 const handleSnapshotChanges = (data, snapshot) => {
   snapshot.docChanges().forEach(change => {
@@ -68,8 +69,14 @@ const LocationTemplate = ({ location }) => {
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
   const [commitments, setCommitments] = useState(null);
+  const [isShowRequestModal, setIsShowRequestModal] = useState(false);
+
   const match = location.pathname.match(/\/location\/(\w+)/);
   const id = match ? match[1] : null;
+
+  const toggleRequestModal = () => {
+    setIsShowRequestModal(!isShowRequestModal);
+  };
 
   useEffect(() => {
     if (!id) {
@@ -91,7 +98,9 @@ const LocationTemplate = ({ location }) => {
     locationDetails = (
       <Row className="mt-5">
         <Col md={4}>
-          <Link className={style.backLink}>&lt; Go back to home page</Link>
+          <Link to="" className={style.backLink}>
+            &lt; Go back to home page
+          </Link>
           <Card className="p-3 mt-3">
             <CardTitle>
               <h3 className={style.location}>
@@ -116,7 +125,12 @@ const LocationTemplate = ({ location }) => {
               <h3>Requests</h3>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Button color="primary" size="sm" className={style.addButton}>
+              <Button
+                color="primary"
+                size="sm"
+                className={style.addButton}
+                onClick={toggleRequestModal}
+              >
                 Add a request
               </Button>
             </Col>
@@ -150,6 +164,10 @@ const LocationTemplate = ({ location }) => {
     <Layout>
       <SEO title={data ? data.data.name : 'Location'} />
       {locationDetails}
+      <RequestFormModal
+        isShow={isShowRequestModal}
+        toggle={toggleRequestModal}
+      />
     </Layout>
   );
 };

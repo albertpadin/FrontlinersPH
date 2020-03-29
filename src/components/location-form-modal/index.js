@@ -27,14 +27,7 @@ const LocationFormModal = ({ isShow, toggle }) => {
     setLoading(true);
 
     const newLocation = {
-      data: {
-        name: data.name,
-        type: data.type,
-        address: {
-          city: data.address.city,
-          province: data.address.province,
-        },
-      },
+      data,
       author: {
         id: user.uid,
         name: user.displayName,
