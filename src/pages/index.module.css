@@ -3,7 +3,6 @@
   margin-bottom: 1.45rem;
 }
 
-.main {
-  height: 100vh;
-  padding-top: 50px;
+.jumbotron {
+  background-color: #f8f9fb;
 }
