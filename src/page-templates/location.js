@@ -166,6 +166,8 @@ const LocationTemplate = ({ location }) => {
       <SEO title={data ? data.data.name : 'Location'} />
       {locationDetails}
       <RequestFormModal
+        location={id}
+        locationName={data ? data.data.name : 'Location'}
         isShow={isShowRequestModal}
         toggle={toggleRequestModal}
       />

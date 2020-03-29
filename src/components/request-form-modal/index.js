@@ -8,6 +8,8 @@ import {
   Label,
   Row,
   Col,
+  FormGroup,
+  Input,
 } from 'reactstrap';
 import {
   AvForm,
@@ -20,7 +22,7 @@ import firebase from 'gatsby-plugin-firebase';
 import useFirebaseUser from '@hooks/use-firebase-user';
 import { NEED_TYPE_CHOICES, UNIT_CHOICES } from '@src/constants';
 
-const RequestFormModal = ({ isShow, toggle, location }) => {
+const RequestFormModal = ({ isShow, toggle, location, locationName }) => {
   const user = useFirebaseUser();
   const defaults = {
     location,
@@ -34,7 +36,6 @@ const RequestFormModal = ({ isShow, toggle, location }) => {
   const [data, setData] = useState(defaults);
 
   const createLocationRequest = async data => {
-    console.log(data);
     const revision = {
       data: {
         location,
@@ -74,6 +75,16 @@ const RequestFormModal = ({ isShow, toggle, location }) => {
       <ModalHeader toggle={toggle}>REQUEST FORM</ModalHeader>
       <ModalBody>
         <AvForm onValidSubmit={handleSubmit}>
+          <FormGroup>
+            <Label for="locationName">What's your location?</Label>
+            <Input
+              type="text"
+              name="locationName"
+              id="locationName"
+              value={locationName}
+              disabled
+            />
+          </FormGroup>
           <AvGroup>
             <Label for="type">What do you need?</Label>
             <AvField
@@ -133,7 +144,7 @@ const RequestFormModal = ({ isShow, toggle, location }) => {
             </Col>
           </Row>
           <AvGroup>
-            <Label for="date">When will you be able to send these?</Label>
+            <Label for="date">When do you need these?</Label>
             <AvInput
               id="date"
               name="date"
