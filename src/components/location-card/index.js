@@ -28,7 +28,7 @@ const LocationCardStats = ({ type, stats }) => {
           <span className={style.statsTitle}>{label}</span>
         </Col>
       </Row>
-      <Progress value={progress} />
+      <Progress value={progress === Infinity ? 100 : progress} />
       <Row>
         <Col className={`mt-1 text-right ${style.stats}`}>
           {stats.commitments} commitments to {stats.requests} requests
