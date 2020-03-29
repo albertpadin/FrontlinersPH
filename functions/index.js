@@ -57,3 +57,41 @@ exports.commitmentRevisions = functions.firestore
       await locationRef.update({ statistics });
     });
   });
+
+exports.requestRevisions = functions.firestore
+  .document('requests/{rid}/revisions/{rid}')
+  .onCreate(async snapshot => {
+    await db.runTransaction(async t => {
+      // Get the parent request document from the revision sub-document.
+      const requestRef = snapshot.ref.parent.parent;
+      const requestSnapshot = await requestRef.get();
+      const requestData = requestSnapshot.data();
+
+      const revisionData = snapshot.data();
+      const requestType = revisionData.data.type;
+
+      const locationId = revisionData.data.location;
+      const locationRef = db.doc(`locations/${locationId}`);
+      const locationSnapshot = await locationRef.get();
+      const locationData = locationSnapshot.data();
+
+      // Update statistics for this commitment type
+      let statistics = get(locationData, 'statistics', {});
+      if (!has(statistics, requestType)) {
+        statistics = set(statistics, requestType, {
+          requests: 0,
+          commitments: 0,
+        });
+      }
+
+      // The quantity could have been edited, so we deduct the old quantity
+      // first before adding the updated one.
+      if (requestData) {
+        statistics[requestType].requests -= requestData.data.quantity;
+      }
+      statistics[requestType].requests += revisionData.data.quantity;
+
+      await requestRef.set(revisionData);
+      await locationRef.update({ statistics });
+    });
+  });
