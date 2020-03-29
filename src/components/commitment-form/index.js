@@ -47,7 +47,10 @@ const CommitmentForm = ({ location }) => {
   };
 
   const handleChange = e => {
-    const { name, value } = e.target;
+    let { name, type, value } = e.target;
+    if (type === 'number') {
+      value = value ? parseInt(value, 10) : '';
+    }
     setData({ ...data, [name]: value });
   };
 
