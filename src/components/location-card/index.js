@@ -11,9 +11,32 @@ import {
   Progress,
   Row,
 } from 'reactstrap';
+import map from 'lodash/map';
 
+import { NEED_TYPE_CHOICES } from '@src/constants';
 import style from './styles.module.css';
 import placeholderImg from '../../images/placeholder-img.png';
+
+const LocationCardStats = ({ type, stats }) => {
+  const label = NEED_TYPE_CHOICES.find(({ value }) => value === type).label;
+  const progress = (stats.commitments / stats.requests) * 100;
+
+  return (
+    <>
+      <Row className="d-flex justify-content-between">
+        <Col>
+          <span className={style.statsTitle}>{label}</span>
+        </Col>
+      </Row>
+      <Progress value={progress} />
+      <Row>
+        <Col className={`mt-1 text-right ${style.stats}`}>
+          {stats.commitments} commitments to {stats.requests} requests
+        </Col>
+      </Row>
+    </>
+  );
+};
 
 const LocationCard = ({ location }) => {
   const { id, author, created_at, data, statistics } = location;
@@ -30,18 +53,10 @@ const LocationCard = ({ location }) => {
         <CardImg top width="100%" src={placeholderImg} alt="location image" />
       </div>
       <CardBody>
-        {/* TODO: Get sum of location statistics (commitments and requests) and its percentage for progress bar */}
-        <Row className="d-flex justify-content-between">
-          <Col>
-            <span className={style.statsTitle}>Location Statistics</span>
-          </Col>
-        </Row>
-        <Progress value="25" />
-        <Row>
-          <Col className={`mt-1 text-right ${style.stats}`}>
-            100 commitments to 800 requests
-          </Col>
-        </Row>
+        {map(location.statistics, (stats, type) => (
+          <LocationCardStats key={type} type={type} stats={stats} />
+        ))}
+
         <Button
           tag={Link}
           to={`/location/${id}`}
