@@ -13,7 +13,7 @@ const RequestsTableRow = ({ request }) => (
 );
 
 const RequestsTable = ({ data }) => (
-  <table>
+  <table className="table-responsive">
     <thead>
       <tr>
         <th>Type</th>

@@ -14,7 +14,7 @@ const CommitmentsTableRow = ({ commitment }) => (
 );
 
 const CommitmentsTable = ({ data }) => (
-  <table>
+  <table className="table-responsive">
     <thead>
       <tr>
         <th>Type</th>

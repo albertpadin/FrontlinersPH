@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { navigate } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import sortBy from 'lodash/sortBy';
+import { Card, CardTitle, CardSubtitle, Col, Row, Button } from 'reactstrap';
 
 import useFirebaseUser from '@hooks/use-firebase-user';
 import Layout from '@layouts/default';
@@ -10,6 +11,8 @@ import RequestsTable from '@components/requests-table';
 import CommitmentsTable from '@components/commitments-table';
 import LocationStatistics from '@components/location-statistics';
 import CommitmentForm from '@components/commitment-form';
+import Loader from '../components/loader';
+import style from './styles.module.css';
 
 const handleSnapshotChanges = (data, snapshot) => {
   snapshot.docChanges().forEach(change => {
@@ -83,25 +86,70 @@ const LocationTemplate = ({ location }) => {
     watchLocationCommitments(id, setCommitments);
   }, [id]);
 
+  let locationDetails = <Loader />;
+  if (data) {
+    locationDetails = (
+      <Row className="mt-5">
+        <Col md={4}>
+          <Link className={style.backLink}>&lt; Go back to home page</Link>
+          <Card className="p-3 mt-3">
+            <CardTitle>
+              <h3 className={style.location}>
+                {data ? data.data.name : <Loader />}
+              </h3>
+            </CardTitle>
+            <CardSubtitle className="mb-3">
+              <span className={style.locationAddress}>
+                {data
+                  ? data.data.address.city + ', ' + data.data.address.province
+                  : ''}
+              </span>
+            </CardSubtitle>
+            <hr />
+            <span className={`${style.statsTitle}`}>Statistics</span>
+            {data && <LocationStatistics data={data.statistics} />}
+          </Card>
+        </Col>
+        <Col md={8} className="mt-5">
+          <Row>
+            <Col>
+              <h3>Requests</h3>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Button color="primary" size="sm" className={style.addButton}>
+                Add a request
+              </Button>
+            </Col>
+          </Row>
+          {requests && <RequestsTable data={requests} />}
+
+          <Row className="mt-5">
+            <Col>
+              <h3>Commitments</h3>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Button color="primary" size="sm" className={style.addButton}>
+                Add a commitment
+              </Button>
+            </Col>
+          </Row>
+          {commitments && <CommitmentsTable data={commitments} />}
+
+          {user && (
+            <>
+              <h2>New Commitment</h2>
+              <CommitmentForm location={id} />
+            </>
+          )}
+        </Col>
+      </Row>
+    );
+  }
+
   return (
     <Layout>
       <SEO title={data ? data.data.name : 'Location'} />
-
-      <h1>{data ? data.data.name : 'Loading...'}</h1>
-      {data && <LocationStatistics data={data.statistics} />}
-
-      <h2>Requests</h2>
-      {requests && <RequestsTable data={requests} />}
-
-      <h2>Commitments</h2>
-      {commitments && <CommitmentsTable data={commitments} />}
-
-      {user && (
-        <>
-          <h2>New Commitment</h2>
-          <CommitmentForm location={id} />
-        </>
-      )}
+      {locationDetails}
     </Layout>
   );
 };
