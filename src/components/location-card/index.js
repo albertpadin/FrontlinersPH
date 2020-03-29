@@ -16,7 +16,6 @@ import style from './styles.module.css';
 import placeholderImg from '../../images/placeholder-img.png';
 
 const LocationCard = ({ location }) => {
-  console.log(location);
   const { id, author, created_at, data, statistics } = location;
 
   return (

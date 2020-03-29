@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 import { Button, Col, Jumbotron, Row } from 'reactstrap';
+import sortBy from 'lodash/sortBy';
 
 import Layout from '@layouts/default';
 import Image from '@components/image';
@@ -10,12 +11,26 @@ import LocationCard from '../components/location-card';
 import LocationFormModal from '../components/location-form-modal';
 import Loader from '../components/loader';
 
-const getLocations = async () => {
-  const snapshot = await firebase
+const watchLocations = callback => {
+  let data = [];
+
+  firebase
     .firestore()
     .collection('locations')
-    .get();
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    .onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          const doc = { id: change.doc.id, ...change.doc.data() };
+          data = sortBy([doc, ...data], d => d.created_at.toDate());
+        } else if (change.type === 'modified') {
+          const doc = { id: change.doc.id, ...change.doc.data() };
+          data = data.map(d => (d.id === doc.id ? doc : d));
+        } else if (change.type === 'removed') {
+          data = data.filter(d => d.id !== change.doc.id);
+        }
+      });
+      callback(data);
+    });
 };
 
 const IndexPage = () => {
@@ -23,7 +38,7 @@ const IndexPage = () => {
   const [isShowLocationModal, setIsShowLocationModal] = useState(false);
 
   useEffect(() => {
-    getLocations().then(setLocations);
+    watchLocations(setLocations);
   }, []);
 
   const toggleLocationModal = () => {
