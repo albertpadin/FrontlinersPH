@@ -11,7 +11,7 @@ const AuthButton = ({ onLogin, onLogout, loading }) => {
       Logout
     </Button>
   ) : (
-    <Button color="primary" onClick={onLogin} disabled={loading}>
+    <Button color="link" onClick={onLogin} disabled={loading}>
       Login with Facebook
     </Button>
   );

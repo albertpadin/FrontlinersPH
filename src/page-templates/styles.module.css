@@ -1,0 +1,28 @@
+.addButton {
+  height: 35px;
+}
+
+.backLink {
+  color: #36363f;
+}
+
+.backLink:hover {
+  text-decoration: none;
+}
+
+.location {
+  text-transform: uppercase;
+  font-size: 1.125rem;
+  color: #373a3c;
+  margin-bottom: 0;
+}
+
+.locationAddress {
+  font-size: 1rem;
+}
+
+.statsTitle {
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}

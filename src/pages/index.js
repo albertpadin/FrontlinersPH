@@ -78,8 +78,8 @@ const IndexPage = () => {
       <Row className="mt-5 d-flex justify-content-center">
         <Col md={4} xs={12} className="text-center">
           <h4>Can't find your location?</h4>
-          <Button color="primary" block onClick={toggleLocationModal}>
-            Add location
+          <Button color="info" block onClick={toggleLocationModal}>
+            Add a location
           </Button>
         </Col>
       </Row>
