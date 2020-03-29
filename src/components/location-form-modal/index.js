@@ -24,7 +24,6 @@ const LocationFormModal = ({ isShow, toggle }) => {
   const [loading, setLoading] = React.useState(false);
 
   const addLocation = async data => {
-    console.log(data);
     setLoading(true);
 
     const newLocation = {
@@ -47,6 +46,8 @@ const LocationFormModal = ({ isShow, toggle }) => {
     await firebase
       .firestore()
       .collection('locations')
+      .doc()
+      .collection('revisions')
       .add(newLocation)
       .then(() => {
         toggle();

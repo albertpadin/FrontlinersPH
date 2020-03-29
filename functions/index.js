@@ -7,6 +7,19 @@ const get = require('lodash/get');
 admin.initializeApp();
 const db = admin.firestore();
 
+exports.locationRevisions = functions.firestore
+  .document('locations/{lid}/revisions/{rid}')
+  .onCreate(async snapshot => {
+    // Get the parent location document from the revision sub-document.
+    const locationRef = snapshot.ref.parent.parent;
+    const locationSnapshot = await locationRef.get();
+    const locationData = locationSnapshot.data();
+    const revisionData = snapshot.data();
+
+    // Set the location's latest revision to the newly-crated document.
+    await locationRef.set({ ...locationData, ...revisionData });
+  });
+
 exports.commitmentRevisions = functions.firestore
   .document('commitments/{cid}/revisions/{rid}')
   .onCreate(async snapshot => {
