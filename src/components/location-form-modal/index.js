@@ -25,11 +25,13 @@ const LocationFormModal = ({ isShow, toggle }) => {
       .firestore()
       .collection('locations')
       .add({
-        name: data.name,
-        type: data.type,
-        address: {
-          city: data.address.city,
-          province: data.address.province,
+        data: {
+          name: data.name,
+          type: data.type,
+          address: {
+            city: data.address.city,
+            province: data.address.province,
+          },
         },
       })
       .then(() => {
