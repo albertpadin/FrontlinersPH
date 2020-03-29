@@ -2,15 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { navigate, Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import sortBy from 'lodash/sortBy';
-import {
-  Card,
-  CardTitle,
-  CardSubtitle,
-  Col,
-  Row,
-  Button,
-  Fade,
-} from 'reactstrap';
+import { Card, CardTitle, CardSubtitle, Col, Row, Button } from 'reactstrap';
 
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
@@ -146,13 +138,7 @@ const LocationTemplate = ({ location }) => {
               </Button>
             </Col>
           </Row>
-          {requests && requests.size > 0 ? (
-            <RequestsTable data={requests} />
-          ) : (
-            <Fade in={true} tag="h5" className="mt-3">
-              No requests submitted yet
-            </Fade>
-          )}
+          {requests && <RequestsTable data={requests} />}
 
           <Row className="mt-5">
             <Col>
@@ -169,13 +155,7 @@ const LocationTemplate = ({ location }) => {
               </Button>
             </Col>
           </Row>
-          {commitments && commitments.size > 0 ? (
-            <CommitmentsTable data={commitments} />
-          ) : (
-            <Fade in={true} tag="h5" className="mt-3">
-              No commitments submitted yet
-            </Fade>
-          )}
+          {commitments && <CommitmentsTable data={commitments} />}
         </Col>
       </Row>
     );
