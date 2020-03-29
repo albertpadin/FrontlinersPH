@@ -13,24 +13,32 @@ const createLocationCommitment = async data => {
     created_at: firebase.firestore.FieldValue.serverTimestamp(),
   };
 
-  await firebase.firestore.collection('commitments').add();
+  await firebase
+    .firestore()
+    .collection('commitments')
+    .doc()
+    .collection('revisions')
+    .add(revision);
 };
 
 const CommitmentForm = ({ location }) => {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({
+  const defaults = {
     location,
     quantity: 0,
     date: '',
     provider: '',
     details: '',
-  });
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(defaults);
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     setLoading(true);
     await createLocationCommitment(data);
+    setData(defaults);
     setLoading(false);
   };
 

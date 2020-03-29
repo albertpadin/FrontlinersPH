@@ -169,7 +169,10 @@ collection: commitments
         - date: <date>
         - provider: <string>
         - details: <string>
-    - author: <string>                  # Firebase auth user ID
+    - author: <object>
+        - id: <string>                  # Firebase auth user ID
+        - name: <string>                # Obtained from Firebase auth user info
+        - photoURL: <string>            # Obtained from Firebase auth user info
     - created_at: <timestamp>           # Use server timestamp
 ```
 
