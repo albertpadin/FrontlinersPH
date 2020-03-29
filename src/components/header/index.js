@@ -45,12 +45,6 @@ const Header = ({ siteTitle }) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/">Recent Commitments</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/">Recent Requests</NavLink>
-            </NavItem>
-            <NavItem>
               <AuthButton loading={loading} onLogin={login} onLogout={logout} />
             </NavItem>
           </Nav>
