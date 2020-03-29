@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -18,17 +18,28 @@ import {
 } from 'availity-reactstrap-validation';
 import firebase from 'gatsby-plugin-firebase';
 import useFirebaseUser from '@hooks/use-firebase-user';
+import { NEED_TYPE_CHOICES, UNIT_CHOICES } from '@src/constants';
 
-const RequestFormModal = ({ isShow, toggle }) => {
+const RequestFormModal = ({ isShow, toggle, location }) => {
   const user = useFirebaseUser();
+  const defaults = {
+    location,
+    type: '',
+    quantity: 0,
+    unit: '',
+    date: '',
+    details: '',
+  };
   const [loading, setLoading] = React.useState(false);
+  const [data, setData] = useState(defaults);
 
-  const addRequest = async data => {
+  const createLocationRequest = async data => {
     console.log(data);
-    setLoading(true);
-
-    const newRequest = {
-      data,
+    const revision = {
+      data: {
+        location,
+        ...data,
+      },
       author: {
         id: user.uid,
         name: user.displayName,
@@ -40,18 +51,22 @@ const RequestFormModal = ({ isShow, toggle }) => {
     await firebase
       .firestore()
       .collection('requests')
-      .add(newRequest)
+      .doc()
+      .collection('revisions')
+      .add(revision);
+  };
+
+  const handleSubmit = async (event, values) => {
+    setLoading(true);
+    await createLocationRequest(values)
       .then(() => {
         toggle();
         setLoading(false);
+        setData(defaults);
       })
       .catch(error => {
         console.error('Error writing firestore document: ', error);
       });
-  };
-
-  const handleSubmit = async (event, values) => {
-    await addRequest(values);
   };
 
   return (
@@ -60,28 +75,22 @@ const RequestFormModal = ({ isShow, toggle }) => {
       <ModalBody>
         <AvForm onValidSubmit={handleSubmit}>
           <AvGroup>
-            <Label for="name">What’s your location?</Label>
-            <AvInput
-              type="text"
-              name="name"
-              placeholder="Enter location"
+            <Label for="type">What do you need?</Label>
+            <AvField
+              type="select"
+              name="type"
+              id="type"
+              value={data.type}
               required
-            />
-            <AvFeedback>Please enter your location</AvFeedback>
-          </AvGroup>
-          <AvGroup>
-            <Label for="name">What do you need?</Label>
-            <AvField type="select" name="type" required>
-              <option value disabled>
+            >
+              <option value="" disabled>
                 Select type
               </option>
-              <option value="MEALS">Meals</option>
-              <option value="FACE_MASKS">Face Masks</option>
-              <option value="FACE_SHIELDS">Face Shields</option>
-              <option value="SUITS">Suits</option>
-              <option value="RAW_MATERIALS">Raw Materials</option>
-              <option value="OTHER">Other</option>
-              <option value="CASH">Cash</option>
+              {NEED_TYPE_CHOICES.map(choice => (
+                <option key={choice.value} value={choice.value}>
+                  {choice.label}
+                </option>
+              ))}
             </AvField>
             <AvFeedback>Please choose your need type</AvFeedback>
           </AvGroup>
@@ -90,8 +99,10 @@ const RequestFormModal = ({ isShow, toggle }) => {
               <AvGroup>
                 <Label for="quantity">How much/many do you need?</Label>
                 <AvInput
-                  type="number"
+                  id="quantity"
                   name="quantity"
+                  type="number"
+                  value={data.quantity}
                   placeholder="Enter quantity"
                   required
                 />
@@ -100,30 +111,46 @@ const RequestFormModal = ({ isShow, toggle }) => {
             </Col>
             <Col md={4} xs={12}>
               <AvGroup>
-                <Label for="name">Unit of measurement?</Label>
-                <AvField type="select" name="unit" required>
-                  <option value>Select unit</option>
-                  <option value="PIECES">Pieces</option>
-                  <option value="PESOS">Pesos</option>
-                  <option value="KG">Kilos</option>
+                <Label for="unit">Unit of measurement?</Label>
+                <AvField
+                  type="select"
+                  name="unit"
+                  id="unit"
+                  value={data.unit}
+                  required
+                >
+                  <option value="" disabled>
+                    Select unit
+                  </option>
+                  {UNIT_CHOICES.map(choice => (
+                    <option key={choice.value} value={choice.value}>
+                      {choice.label}
+                    </option>
+                  ))}
                 </AvField>
                 <AvFeedback>Please enter unit</AvFeedback>
               </AvGroup>
             </Col>
           </Row>
           <AvGroup>
-            <Label for="name">When will you be able to send these?</Label>
+            <Label for="date">When will you be able to send these?</Label>
             <AvInput
-              type="date"
+              id="date"
               name="date"
-              placeholder="Enter date"
+              type="date"
+              value={data.date}
               required
             />
             <AvFeedback>Please enter date</AvFeedback>
           </AvGroup>
           <AvGroup>
             <Label for="details">Additional notes:</Label>
-            <AvInput type="textarea" name="details" />
+            <AvInput
+              id="details"
+              name="details"
+              type="textarea"
+              value={data.details}
+            />
           </AvGroup>
           <Button color="primary" type="submit" block disabled={loading}>
             {loading ? 'Submitting' : 'Submit'} Entry
