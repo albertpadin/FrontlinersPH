@@ -714,3 +714,10 @@ pre tt:after {
     font-size: 100%;
   }
 }
+
+/* text styles */
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+}

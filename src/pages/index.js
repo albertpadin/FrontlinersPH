@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import firebase from 'gatsby-plugin-firebase';
-import {
-  Button,
-  Col,
-  InputGroup,
-  InputGroupAddon,
-  Input,
-  Row,
-} from 'reactstrap';
+import { Button, Col, Jumbotron, Row } from 'reactstrap';
 
 import Layout from '@layouts/default';
 import Image from '@components/image';
@@ -15,6 +8,7 @@ import SEO from '@components/seo';
 import style from './index.module.css';
 import LocationCard from '../components/location-card';
 import LocationFormModal from '../components/location-form-modal';
+import Loader from '../components/loader';
 
 const getLocations = async () => {
   const snapshot = await firebase
@@ -33,15 +27,13 @@ const IndexPage = () => {
   }, []);
 
   const toggleLocationModal = () => {
-    console.log('here');
     setIsShowLocationModal(!isShowLocationModal);
-    console.log(isShowLocationModal);
   };
 
-  let locationCards = null;
+  let locationCards = <Loader />;
   if (locations) {
     locationCards = locations.map(location => (
-      <Col md={3} xs={12} key={location.id}>
+      <Col md={4} xs={12} key={location.id}>
         <LocationCard location={location} />
       </Col>
     ));
@@ -50,36 +42,33 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <Row className={style.main}>
-        <Col xs={12} md={6}>
-          <Image />
-        </Col>
-        <Col xs={12} md={{ size: '5', offset: 1 }} className="mt-5">
-          <h1 className="mb-5">
-            Help as much as you can. Ask for help if needed.
-          </h1>
-          <Button outline color="primary" onClick={toggleLocationModal} block>
+      <Jumbotron className={`${style.jumbotron} mt-5`}>
+        <Row>
+          <Col xs={12} md={{ offset: '1', size: '4' }}>
+            <Image />
+          </Col>
+          <Col xs={12} md={{ offset: '1', size: '6' }}>
+            <h1>
+              Let's coordinate our relief efforts for the COVID-19 frontliners
+            </h1>
+            <p>
+              We need your help! Help the frontliners combatting COVID-19. Share
+              information on your latest or planned relief drop here and let's
+              get aid where it is needed the most.
+            </p>
+          </Col>
+        </Row>
+      </Jumbotron>
+      <Row className="mt-5">{locationCards}</Row>
+      <Row className="mt-5 d-flex justify-content-center">
+        <Col md={4} xs={12} className="text-center">
+          <h4>Can't find your location?</h4>
+          <Button color="primary" block onClick={toggleLocationModal}>
             Add location
           </Button>
-          <Button outline color="primary" block>
-            Request donations
-          </Button>
-          <Button outline color="primary" block>
-            Send donations
-          </Button>
         </Col>
       </Row>
-      <Row className="mt-5">
-        <Col>
-          <InputGroup>
-            <Input placeholder="Type a location" />
-            <InputGroupAddon addonType="append">
-              <Button color="primary">Search</Button>
-            </InputGroupAddon>
-          </InputGroup>
-        </Col>
-      </Row>
-      <Row className="mt-5">{locationCards}</Row>
+
       <LocationFormModal
         isShow={isShowLocationModal}
         toggle={toggleLocationModal}
