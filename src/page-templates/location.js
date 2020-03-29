@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
+import sortBy from 'lodash/sortBy';
 
 import useFirebaseUser from '@hooks/use-firebase-user';
 import Layout from '@layouts/default';
@@ -18,22 +19,46 @@ const getLocationData = async id => {
   return snapshot.data();
 };
 
-const getLocationRequests = async id => {
-  const snapshot = await firebase
+const updateSnapshotData = (data, snapshot) => {
+  snapshot.docChanges().forEach(change => {
+    if (change.type === 'added') {
+      const doc = { id: change.doc.id, ...change.doc.data() };
+      data = sortBy([doc, ...data], d => -d.created_at.toDate());
+    } else if (change.type === 'modified') {
+      const doc = { id: change.doc.id, ...change.doc.data() };
+      data = data.map(d => (d.id === doc.id ? doc : d));
+    } else if (change.type === 'removed') {
+      data = data.filter(d => d.id !== change.doc.id);
+    }
+  });
+
+  return data;
+};
+
+const watchLocationRequests = (id, callback) => {
+  let data = [];
+
+  firebase
     .firestore()
     .collection('requests')
     .where('data.location', '==', id)
-    .get();
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    .onSnapshot(snapshot => {
+      data = updateSnapshotData(data, snapshot);
+      callback(data);
+    });
 };
 
-const getLocationCommitments = async id => {
-  const snapshot = await firebase
+const watchLocationCommitments = (id, callback) => {
+  let data = [];
+
+  firebase
     .firestore()
     .collection('commitments')
     .where('data.location', '==', id)
-    .get();
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    .onSnapshot(snapshot => {
+      data = updateSnapshotData(data, snapshot);
+      callback(data);
+    });
 };
 
 const LocationTemplate = ({ location }) => {
@@ -55,8 +80,8 @@ const LocationTemplate = ({ location }) => {
       setData(locationData);
     });
 
-    getLocationRequests(id).then(setRequests);
-    getLocationCommitments(id).then(setCommitments);
+    watchLocationRequests(id, setRequests);
+    watchLocationCommitments(id, setCommitments);
   }, [id]);
 
   return (
