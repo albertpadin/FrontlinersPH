@@ -12,9 +12,11 @@ const LocationStatisticsRow = ({ type, stats }) => (
 const LocationStatistics = ({ data }) => (
   <table>
     <thead>
-      <th>Type</th>
-      <th>Requests</th>
-      <th>Commitments</th>
+      <tr>
+        <th>Type</th>
+        <th>Requests</th>
+        <th>Commitments</th>
+      </tr>
     </thead>
 
     <tbody>

@@ -167,6 +167,7 @@ collection: commitments
         - quantity: <number>
         - unit: <enum>
         - date: <date>
+        - provider: <string>
         - details: <string>
     - author: <string>                  # Firebase auth user ID
     - created_at: <timestamp>           # Use server timestamp
@@ -181,4 +182,5 @@ collection: commitments
 | quantity            | Quantity               | Number          |
 | unit                | Unit (e.g. pieces, kg) | Select          |
 | date                | Delivery date          | Date            |
+| provider            | Provider               | Text            |
 | details             | Additional details     | Textarea        |

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 
+import useFirebaseUser from '@hooks/use-firebase-user';
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
 import RequestsTable from '@components/requests-table';
@@ -36,6 +37,7 @@ const getLocationCommitments = async id => {
 };
 
 const LocationTemplate = ({ location }) => {
+  const user = useFirebaseUser();
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
   const [commitments, setCommitments] = useState(null);
@@ -70,8 +72,12 @@ const LocationTemplate = ({ location }) => {
       <h2>Commitments</h2>
       {commitments && <CommitmentsTable data={commitments} />}
 
-      <h2>New Commitment</h2>
-      <CommitmentForm location={id} />
+      {user && (
+        <>
+          <h2>New Commitment</h2>
+          <CommitmentForm location={id} />
+        </>
+      )}
     </Layout>
   );
 };
