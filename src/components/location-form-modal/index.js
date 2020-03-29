@@ -17,33 +17,48 @@ import {
   AvFeedback,
 } from 'availity-reactstrap-validation';
 import firebase from 'gatsby-plugin-firebase';
+import useFirebaseUser from '@hooks/use-firebase-user';
 
 const LocationFormModal = ({ isShow, toggle }) => {
-  const addLocation = data => {
+  const user = useFirebaseUser();
+  const [loading, setLoading] = React.useState(false);
+
+  const addLocation = async data => {
     console.log(data);
-    return firebase
+    setLoading(true);
+
+    const newLocation = {
+      data: {
+        name: data.name,
+        type: data.type,
+        address: {
+          city: data.address.city,
+          province: data.address.province,
+        },
+      },
+      author: {
+        id: user.uid,
+        name: user.displayName,
+        photoURL: user.photoURL,
+      },
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    await firebase
       .firestore()
       .collection('locations')
-      .add({
-        data: {
-          name: data.name,
-          type: data.type,
-          address: {
-            city: data.address.city,
-            province: data.address.province,
-          },
-        },
-      })
+      .add(newLocation)
       .then(() => {
         toggle();
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error writing firestore document: ', error);
       });
   };
 
-  const handleSubmit = (event, values) => {
-    addLocation(values);
+  const handleSubmit = async (event, values) => {
+    await addLocation(values);
   };
 
   return (
@@ -64,7 +79,7 @@ const LocationFormModal = ({ isShow, toggle }) => {
           <AvGroup>
             <Label for="name">What’s your location type?</Label>
             <AvField type="select" name="type" required>
-              <option disabled>Select location type</option>
+              <option value="">Select location type</option>
               <option value="HOSPITAL">Hospital</option>
               <option value="PRODUCTION_HUB">Production Hub</option>
               <option value="KITCHEN">Kitchen</option>
@@ -101,8 +116,8 @@ const LocationFormModal = ({ isShow, toggle }) => {
               </AvGroup>
             </Col>
           </Row>
-          <Button color="primary" type="submit" block>
-            Submit Entry
+          <Button color="primary" type="submit" block disabled={loading}>
+            {loading ? 'Submitting' : 'Submit'} Entry
           </Button>
         </AvForm>
       </ModalBody>
