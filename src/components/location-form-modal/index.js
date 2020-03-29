@@ -73,7 +73,9 @@ const LocationFormModal = ({ isShow, toggle }) => {
           <AvGroup>
             <Label for="name">What’s your location type?</Label>
             <AvField type="select" name="type" required>
-              <option value="">Select location type</option>
+              <option value="" disabled>
+                Select location type
+              </option>
               <option value="HOSPITAL">Hospital</option>
               <option value="PRODUCTION_HUB">Production Hub</option>
               <option value="KITCHEN">Kitchen</option>

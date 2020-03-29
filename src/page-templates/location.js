@@ -4,13 +4,12 @@ import firebase from 'gatsby-plugin-firebase';
 import sortBy from 'lodash/sortBy';
 import { Card, CardTitle, CardSubtitle, Col, Row, Button } from 'reactstrap';
 
-import useFirebaseUser from '@hooks/use-firebase-user';
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
 import RequestsTable from '@components/requests-table';
 import CommitmentsTable from '@components/commitments-table';
 import LocationStatistics from '@components/location-statistics';
-import CommitmentForm from '@components/commitment-form';
+import CommitmentFormModal from '@components/commitment-form-modal';
 import Loader from '../components/loader';
 import style from './styles.module.css';
 import RequestFormModal from '../components/request-form-modal';
@@ -65,17 +64,21 @@ const watchLocationCommitments = (id, callback) => {
 };
 
 const LocationTemplate = ({ location }) => {
-  const user = useFirebaseUser();
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
   const [commitments, setCommitments] = useState(null);
   const [isShowRequestModal, setIsShowRequestModal] = useState(false);
+  const [isShowCommitmentModal, setIsShowCommitmentModal] = useState(false);
 
   const match = location.pathname.match(/\/location\/(\w+)/);
   const id = match ? match[1] : null;
 
   const toggleRequestModal = () => {
     setIsShowRequestModal(!isShowRequestModal);
+  };
+
+  const toggleCommitmentModal = () => {
+    setIsShowCommitmentModal(!isShowCommitmentModal);
   };
 
   useEffect(() => {
@@ -142,19 +145,17 @@ const LocationTemplate = ({ location }) => {
               <h3>Commitments</h3>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Button color="primary" size="sm" className={style.addButton}>
+              <Button
+                color="primary"
+                size="sm"
+                className={style.addButton}
+                onClick={toggleCommitmentModal}
+              >
                 Add a commitment
               </Button>
             </Col>
           </Row>
           {commitments && <CommitmentsTable data={commitments} />}
-
-          {user && (
-            <>
-              <h2>New Commitment</h2>
-              <CommitmentForm location={id} />
-            </>
-          )}
         </Col>
       </Row>
     );
@@ -167,6 +168,11 @@ const LocationTemplate = ({ location }) => {
       <RequestFormModal
         isShow={isShowRequestModal}
         toggle={toggleRequestModal}
+      />
+      <CommitmentFormModal
+        location={id}
+        isShow={isShowCommitmentModal}
+        toggle={toggleCommitmentModal}
       />
     </Layout>
   );

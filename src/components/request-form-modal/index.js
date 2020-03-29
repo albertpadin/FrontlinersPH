@@ -72,7 +72,9 @@ const RequestFormModal = ({ isShow, toggle }) => {
           <AvGroup>
             <Label for="name">What do you need?</Label>
             <AvField type="select" name="type" required>
-              <option value>Select type</option>
+              <option value disabled>
+                Select type
+              </option>
               <option value="MEALS">Meals</option>
               <option value="FACE_MASKS">Face Masks</option>
               <option value="FACE_SHIELDS">Face Shields</option>
