@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
 import {
   Button,
   Card,
@@ -12,14 +12,15 @@ import {
 } from 'reactstrap';
 
 import style from './styles.module.css';
-
 import placeholderImg from '../../images/placeholder-img.png';
 
-const LocationCard = ({ location, statistics }) => {
+const LocationCard = ({ location }) => {
   return (
     <Card className="mt-5">
       <div className="position-relative">
-        <CardTitle className={style.locationText}>{location}</CardTitle>
+        <CardTitle className={style.locationText}>
+          {location.data.name}
+        </CardTitle>
         <CardImg top width="100%" src={placeholderImg} alt="location image" />
       </div>
       <CardBody>
@@ -34,22 +35,18 @@ const LocationCard = ({ location, statistics }) => {
             456 commitments
           </ListGroupItem>
         </ListGroup>
-        <Button color="primary" className="mt-5" block>
+        <Button
+          tag={Link}
+          to={`/location/${location.id}`}
+          color="primary"
+          className="mt-5"
+          block
+        >
           View Efforts
         </Button>
       </CardBody>
     </Card>
   );
-};
-
-LocationCard.propTypes = {
-  location: PropTypes.string,
-  address: PropTypes.string,
-};
-
-LocationCard.defaultProps = {
-  location: '',
-  address: '',
 };
 
 export default LocationCard;

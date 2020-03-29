@@ -30,7 +30,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     getLocations().then(setLocations);
-  }, [firebase]);
+  }, []);
 
   const toggleLocationModal = () => {
     console.log('here');
@@ -40,9 +40,9 @@ const IndexPage = () => {
 
   let locationCards = null;
   if (locations) {
-    locationCards = locations.map(({ data, statistics }) => (
-      <Col>
-        <LocationCard location={data.name} statistics={statistics} />
+    locationCards = locations.map(location => (
+      <Col key={location.id}>
+        <LocationCard location={location} />
       </Col>
     ));
   }
