@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 
+import { NEED_TYPE_CHOICES, UNIT_CHOICES } from '@src/constants';
+
 const createLocationCommitment = async data => {
   const user = firebase.auth().currentUser;
   const revision = {
@@ -24,7 +26,9 @@ const createLocationCommitment = async data => {
 const CommitmentForm = ({ location }) => {
   const defaults = {
     location,
+    type: '',
     quantity: 0,
+    unit: '',
     date: '',
     provider: '',
     details: '',
@@ -52,8 +56,14 @@ const CommitmentForm = ({ location }) => {
       <div>
         <label htmlFor="type">Type</label>
         <select id="type" name="type" value={data.type} onChange={handleChange}>
-          <option value="MASKS">Masks</option>
-          <option value="MEALS">Meals</option>
+          <option value="" disabled>
+            Select type
+          </option>
+          {NEED_TYPE_CHOICES.map(choice => (
+            <option key={choice.value} value={choice.value}>
+              {choice.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -71,8 +81,14 @@ const CommitmentForm = ({ location }) => {
       <div>
         <label htmlFor="unit">Unit</label>
         <select id="unit" name="unit" value={data.unit} onChange={handleChange}>
-          <option value="PIECES">Pieces</option>
-          <option value="KG">Kilograms</option>
+          <option value="" disabled>
+            Select unit
+          </option>
+          {UNIT_CHOICES.map(choice => (
+            <option key={choice.value} value={choice.value}>
+              {choice.label}
+            </option>
+          ))}
         </select>
       </div>
 
