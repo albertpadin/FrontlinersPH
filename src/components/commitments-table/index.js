@@ -1,17 +1,24 @@
 import React from 'react';
 import format from 'date-fns/format';
+import { NEED_TYPE_CHOICES } from '@src/constants';
 
-const CommitmentsTableRow = ({ commitment }) => (
-  <tr>
-    <td>{commitment.data.type}</td>
-    <td>
-      {commitment.data.quantity} {commitment.data.unit}
-    </td>
-    <td>{format(new Date(commitment.data.date), 'MMMM d, yyyy')}</td>
-    <td>{commitment.data.provider}</td>
-    <td>{commitment.data.details}</td>
-  </tr>
-);
+const CommitmentsTableRow = ({ commitment }) => {
+  const label = NEED_TYPE_CHOICES.find(
+    ({ value }) => value === commitment.data.type
+  ).label;
+
+  return (
+    <tr>
+      <td>{label}</td>
+      <td>
+        {commitment.data.quantity} {commitment.data.unit}
+      </td>
+      <td>{format(new Date(commitment.data.date), 'MMMM d, yyyy')}</td>
+      <td>{commitment.data.provider}</td>
+      <td>{commitment.data.details}</td>
+    </tr>
+  );
+};
 
 const CommitmentsTable = ({ data }) => (
   <table className="table-responsive">
