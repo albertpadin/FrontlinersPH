@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button } from 'reactstrap';
 
-import { FirebaseUserContext } from '@src/contexts';
+import useFirebaseUser from '@hooks/use-firebase-user';
 
 const AuthButton = ({ onLogin, onLogout, loading }) => {
-  const user = useContext(FirebaseUserContext);
+  const user = useFirebaseUser();
 
   return user ? (
     <Button color="primary" onClick={onLogout} disabled={loading}>
