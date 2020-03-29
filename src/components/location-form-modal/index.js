@@ -93,26 +93,26 @@ const LocationFormModal = ({ isShow, toggle }) => {
           <Row>
             <Col>
               <AvGroup>
-                <Label for="city">What city/municipality are you from?</Label>
+                <Label for="city">City/Municipality</Label>
                 <AvInput
                   type="text"
                   name="address.city"
                   placeholder="Enter city/municipality"
                   required
                 />
-                <AvFeedback>Please enter your city</AvFeedback>
+                <AvFeedback>Please enter city/municipality</AvFeedback>
               </AvGroup>
             </Col>
             <Col>
               <AvGroup>
-                <Label for="province">What province do you live in?</Label>
+                <Label for="province">Province</Label>
                 <AvInput
                   type="text"
                   name="address.province"
                   placeholder="Enter province"
                   required
                 />
-                <AvFeedback>Please enter your province</AvFeedback>
+                <AvFeedback>Please enter province</AvFeedback>
               </AvGroup>
             </Col>
           </Row>
