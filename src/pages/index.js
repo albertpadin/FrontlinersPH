@@ -41,7 +41,7 @@ const IndexPage = () => {
   let locationCards = null;
   if (locations) {
     locationCards = locations.map(location => (
-      <Col key={location.id}>
+      <Col md={3} xs={12} key={location.id}>
         <LocationCard location={location} />
       </Col>
     ));
