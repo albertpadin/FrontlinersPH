@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 
 const useFirebaseUser = () => {
-  const [user, setUser] = useState(firebase.auth().currentUser);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    setUser(firebase.auth().currentUser);
     firebase.auth().onAuthStateChanged(setUser);
   }, []);
 

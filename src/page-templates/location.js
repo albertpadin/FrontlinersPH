@@ -65,7 +65,8 @@ const LocationTemplate = ({ location }) => {
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
   const [commitments, setCommitments] = useState(null);
-  const [_, id] = location.pathname.match(/\/location\/(\w+)/);
+  const match = location.pathname.match(/\/location\/(\w+)/);
+  const id = match ? match[1] : null;
 
   useEffect(() => {
     if (!id) {
