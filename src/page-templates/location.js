@@ -11,15 +11,7 @@ import CommitmentsTable from '@components/commitments-table';
 import LocationStatistics from '@components/location-statistics';
 import CommitmentForm from '@components/commitment-form';
 
-const getLocationData = async id => {
-  const snapshot = await firebase
-    .firestore()
-    .doc(`locations/${id}`)
-    .get();
-  return snapshot.data();
-};
-
-const updateSnapshotData = (data, snapshot) => {
+const handleSnapshotChanges = (data, snapshot) => {
   snapshot.docChanges().forEach(change => {
     if (change.type === 'added') {
       const doc = { id: change.doc.id, ...change.doc.data() };
@@ -35,6 +27,13 @@ const updateSnapshotData = (data, snapshot) => {
   return data;
 };
 
+const watchLocationData = (id, callback) => {
+  firebase
+    .firestore()
+    .doc(`locations/${id}`)
+    .onSnapshot(snapshot => callback(snapshot.data()));
+};
+
 const watchLocationRequests = (id, callback) => {
   let data = [];
 
@@ -43,7 +42,7 @@ const watchLocationRequests = (id, callback) => {
     .collection('requests')
     .where('data.location', '==', id)
     .onSnapshot(snapshot => {
-      data = updateSnapshotData(data, snapshot);
+      data = handleSnapshotChanges(data, snapshot);
       callback(data);
     });
 };
@@ -56,7 +55,7 @@ const watchLocationCommitments = (id, callback) => {
     .collection('commitments')
     .where('data.location', '==', id)
     .onSnapshot(snapshot => {
-      data = updateSnapshotData(data, snapshot);
+      data = handleSnapshotChanges(data, snapshot);
       callback(data);
     });
 };
@@ -73,13 +72,12 @@ const LocationTemplate = ({ location }) => {
       return navigate('/404');
     }
 
-    getLocationData(id).then(locationData => {
+    watchLocationData(id, locationData => {
       if (!locationData) {
         return navigate('/404');
       }
       setData(locationData);
     });
-
     watchLocationRequests(id, setRequests);
     watchLocationCommitments(id, setCommitments);
   }, [id]);

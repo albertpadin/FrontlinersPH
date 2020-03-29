@@ -6,7 +6,7 @@ const useFirebaseUser = () => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setUser);
-  }, [firebase]);
+  }, []);
 
   return user;
 };
