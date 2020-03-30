@@ -19,23 +19,25 @@ const RequestsTableRow = ({ request }) => {
 };
 
 const RequestsTable = ({ data }) => (
-  <table className="table-responsive">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Quantity</th>
-        <th>Unit</th>
-        <th>Date needed</th>
-        <th>Details</th>
-      </tr>
-    </thead>
+  <div className="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Date needed</th>
+          <th>Details</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      {data.map(request => (
-        <RequestsTableRow key={request.id} request={request} />
-      ))}
-    </tbody>
-  </table>
+      <tbody>
+        {data.map(request => (
+          <RequestsTableRow key={request.id} request={request} />
+        ))}
+      </tbody>
+    </table>
+  </div>
 );
 
 export default RequestsTable;

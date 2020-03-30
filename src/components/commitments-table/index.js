@@ -21,23 +21,25 @@ const CommitmentsTableRow = ({ commitment }) => {
 };
 
 const CommitmentsTable = ({ data }) => (
-  <table className="table-responsive">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Quantity</th>
-        <th>Delivery date</th>
-        <th>Provider</th>
-        <th>Details</th>
-      </tr>
-    </thead>
+  <div className="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Delivery date</th>
+          <th>Provider</th>
+          <th>Details</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      {data.map(commitment => (
-        <CommitmentsTableRow key={commitment.id} commitment={commitment} />
-      ))}
-    </tbody>
-  </table>
+      <tbody>
+        {data.map(commitment => (
+          <CommitmentsTableRow key={commitment.id} commitment={commitment} />
+        ))}
+      </tbody>
+    </table>
+  </div>
 );
 
 export default CommitmentsTable;
