@@ -37,3 +37,9 @@
   text-transform: uppercase;
   font-weight: 700;
 }
+
+@media only screen and (max-width: 320px) {
+  .addButton {
+    font-size: 0.75rem;
+  }
+}

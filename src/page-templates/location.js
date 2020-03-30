@@ -159,7 +159,7 @@ const LocationTemplate = ({ location }) => {
 
           <Row className="mt-5">
             <Col>
-              <h3>Commitments</h3>
+              <h3>Donations</h3>
             </Col>
             <Col className="d-flex justify-content-end">
               <Button
@@ -168,7 +168,7 @@ const LocationTemplate = ({ location }) => {
                 className={style.addButton}
                 onClick={toggleCommitmentModal}
               >
-                Add a commitment
+                Add a donation
               </Button>
             </Col>
           </Row>
