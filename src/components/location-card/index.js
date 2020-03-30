@@ -24,7 +24,7 @@ const LocationCardStats = ({ type, stats }) => {
   return (
     <>
       <Row className="d-flex justify-content-between">
-        <Col>
+        <Col className="text-left">
           <span className={style.statsTitle}>{label}</span>
         </Col>
       </Row>
@@ -50,13 +50,24 @@ const LocationCard = ({ location }) => {
             {data.address.city + ', ' + data.address.province}
           </CardSubtitle>
         </div>
-        <CardImg className={style.locationImage} top width="100%" src={placeholderImg} alt="location image"/>
+        <CardImg
+          className={style.locationImage}
+          top
+          width="100%"
+          src={placeholderImg}
+          alt="location image"
+        />
       </div>
       <CardBody className={style.statsBody}>
-        {map(location.statistics, (stats, type) => (
-          <LocationCardStats key={type} type={type} stats={stats} />
-        ))}
-
+        <div className={`${style.statsDiv} text-center`}>
+          {location.statistics ? (
+            map(location.statistics, (stats, type) => (
+              <LocationCardStats key={type} type={type} stats={stats} />
+            ))
+          ) : (
+            <small>No requests or donations made yet</small>
+          )}
+        </div>
         <Button
           tag={Link}
           to={`/location/${id}`}
