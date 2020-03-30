@@ -1,5 +1,5 @@
 .locationDiv {
-  bottom: 50px;
+  bottom: 25px;
 }
 
 .locationTitle {
@@ -15,6 +15,14 @@
   font-weight: 600;
   padding-left: 20px;
   text-transform: uppercase;
+}
+
+.locationImage {
+  margin-bottom: 0px;
+}
+
+.statsBody {
+  padding-bottom: 1.75rem;
 }
 
 .statsTitle {
