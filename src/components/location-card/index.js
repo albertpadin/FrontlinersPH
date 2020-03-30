@@ -50,9 +50,9 @@ const LocationCard = ({ location }) => {
             {data.address.city + ', ' + data.address.province}
           </CardSubtitle>
         </div>
-        <CardImg top width="100%" src={placeholderImg} alt="location image" />
+        <CardImg className={style.locationImage} top width="100%" src={placeholderImg} alt="location image"/>
       </div>
-      <CardBody>
+      <CardBody className={style.statsBody}>
         {map(location.statistics, (stats, type) => (
           <LocationCardStats key={type} type={type} stats={stats} />
         ))}
