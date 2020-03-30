@@ -13,6 +13,7 @@ import {
   Container,
 } from 'reactstrap';
 
+import SiteIcon from '@assets/svg/frontlinersph.svg';
 import AuthButton from '@components/auth-button';
 import style from './styles.module.css';
 
@@ -39,7 +40,7 @@ const Header = ({ siteTitle }) => {
     <Navbar light expand="md" className={style.transparentNavbar}>
       <Container>
         <NavbarBrand className={style.siteTitle} href="/">
-          #FrontlinersPH
+          <SiteIcon width="200px" height="50px" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
