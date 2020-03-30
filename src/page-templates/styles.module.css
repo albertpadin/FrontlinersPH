@@ -4,6 +4,17 @@
 
 .backLink {
   color: #36363f;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.backLink svg {
+  fill: currentColor;
+}
+
+.backLink span {
+  padding-right: 0.5rem;
 }
 
 .backLink:hover {
