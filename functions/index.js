@@ -59,7 +59,7 @@ exports.commitmentRevisions = functions.firestore
   });
 
 exports.requestRevisions = functions.firestore
-  .document('requests/{rid}/revisions/{rid}')
+  .document('requests/{qid}/revisions/{rid}')
   .onCreate(async snapshot => {
     await db.runTransaction(async t => {
       // Get the parent request document from the revision sub-document.
