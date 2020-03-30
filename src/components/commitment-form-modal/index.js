@@ -37,6 +37,8 @@ const CommitmentFormModal = ({ isShow, toggle, location }) => {
   const [data, setData] = useState(defaults);
 
   const createLocationCommitment = async data => {
+    data.quantity = parseInt(data.quantity);
+
     const revision = {
       data: {
         location,

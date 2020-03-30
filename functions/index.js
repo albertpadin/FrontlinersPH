@@ -49,9 +49,13 @@ exports.commitmentRevisions = functions.firestore
       // The quantity could have been edited, so we deduct the old quantity
       // first before adding the updated one.
       if (commitmentData) {
-        statistics[commitmentType].commitments -= commitmentData.data.quantity;
+        statistics[commitmentType].commitments -= parseInt(
+          commitmentData.data.quantity
+        );
       }
-      statistics[commitmentType].commitments += revisionData.data.quantity;
+      statistics[commitmentType].commitments += parseInt(
+        revisionData.data.quantity
+      );
 
       await commitmentRef.set(revisionData);
       await locationRef.update({ statistics });
@@ -87,9 +91,9 @@ exports.requestRevisions = functions.firestore
       // The quantity could have been edited, so we deduct the old quantity
       // first before adding the updated one.
       if (requestData) {
-        statistics[requestType].requests -= requestData.data.quantity;
+        statistics[requestType].requests -= parseInt(requestData.data.quantity);
       }
-      statistics[requestType].requests += revisionData.data.quantity;
+      statistics[requestType].requests += parseInt(revisionData.data.quantity);
 
       await requestRef.set(revisionData);
       await locationRef.update({ statistics });

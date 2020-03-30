@@ -36,6 +36,8 @@ const RequestFormModal = ({ isShow, toggle, location, locationName }) => {
   const [data, setData] = useState(defaults);
 
   const createLocationRequest = async data => {
+    data.quantity = parseInt(data.quantity);
+
     const revision = {
       data: {
         location,
