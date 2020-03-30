@@ -14,6 +14,7 @@ import CommitmentFormModal from '@components/commitment-form-modal';
 import Loader from '../components/loader';
 import style from './styles.module.css';
 import RequestFormModal from '../components/request-form-modal';
+import useFirebaseUser from '@hooks/use-firebase-user';
 
 const handleSnapshotChanges = (data, snapshot) => {
   snapshot.docChanges().forEach(change => {
@@ -65,6 +66,8 @@ const watchLocationCommitments = (id, callback) => {
 };
 
 const LocationTemplate = ({ location }) => {
+  const user = useFirebaseUser();
+
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
   const [commitments, setCommitments] = useState(null);
@@ -74,12 +77,21 @@ const LocationTemplate = ({ location }) => {
   const match = location.pathname.match(/\/location\/(\w+)/);
   const id = match ? match[1] : null;
 
-  const toggleRequestModal = () => {
+  const toggleRequestModal = async () => {
+    await checkUserAuth();
     setIsShowRequestModal(!isShowRequestModal);
   };
 
-  const toggleCommitmentModal = () => {
+  const toggleCommitmentModal = async () => {
+    await checkUserAuth();
     setIsShowCommitmentModal(!isShowCommitmentModal);
+  };
+
+  const checkUserAuth = async () => {
+    if (!user) {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      await firebase.auth().signInWithPopup(provider);
+    }
   };
 
   useEffect(() => {
