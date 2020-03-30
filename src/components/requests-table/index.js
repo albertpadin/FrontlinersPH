@@ -10,9 +10,8 @@ const RequestsTableRow = ({ request }) => {
   return (
     <tr>
       <td>{label}</td>
-      <td>
-        {request.data.quantity} {request.data.unit}
-      </td>
+      <td>{request.data.quantity}</td>
+      <td>{request.data.unit}</td>
       <td>{format(new Date(request.data.date), 'MMMM d, yyyy')}</td>
       <td>{request.data.details}</td>
     </tr>
@@ -25,6 +24,7 @@ const RequestsTable = ({ data }) => (
       <tr>
         <th>Type</th>
         <th>Quantity</th>
+        <th>Unit</th>
         <th>Date needed</th>
         <th>Details</th>
       </tr>
