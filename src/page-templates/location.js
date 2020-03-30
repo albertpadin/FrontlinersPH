@@ -3,18 +3,19 @@ import { navigate, Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import sortBy from 'lodash/sortBy';
 import { Card, CardTitle, CardSubtitle, Col, Row, Button } from 'reactstrap';
-import BackIcon from '@assets/svg/back.svg';
 
+import BackIcon from '@assets/svg/back.svg';
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
 import RequestsTable from '@components/requests-table';
 import CommitmentsTable from '@components/commitments-table';
 import LocationStatistics from '@components/location-statistics';
 import CommitmentFormModal from '@components/commitment-form-modal';
-import Loader from '../components/loader';
-import style from './styles.module.css';
-import RequestFormModal from '../components/request-form-modal';
+import RequestFormModal from '@components/request-form-modal';
+import Loader from '@components/loader';
 import useFirebaseUser from '@hooks/use-firebase-user';
+
+import style from './styles.module.css';
 
 const handleSnapshotChanges = (data, snapshot) => {
   snapshot.docChanges().forEach(change => {

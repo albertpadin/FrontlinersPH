@@ -6,10 +6,11 @@ import sortBy from 'lodash/sortBy';
 import Layout from '@layouts/default';
 import Image from '@components/image';
 import SEO from '@components/seo';
+import LocationCard from '@components/location-card';
+import LocationFormModal from '@components/location-form-modal';
+import Loader from '@components/loader';
+
 import style from './index.module.css';
-import LocationCard from '../components/location-card';
-import LocationFormModal from '../components/location-form-modal';
-import Loader from '../components/loader';
 
 const watchLocations = callback => {
   let data = [];

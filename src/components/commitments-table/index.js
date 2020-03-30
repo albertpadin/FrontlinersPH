@@ -1,6 +1,7 @@
 import React from 'react';
 import format from 'date-fns/format';
 import { NEED_TYPE_CHOICES } from '@src/constants';
+import NoDataTableRow from '@components/no-data-table-row';
 
 const CommitmentsTableRow = ({ commitment }) => {
   const label = NEED_TYPE_CHOICES.find(
@@ -34,9 +35,13 @@ const CommitmentsTable = ({ data }) => (
       </thead>
 
       <tbody>
-        {data.map(commitment => (
-          <CommitmentsTableRow key={commitment.id} commitment={commitment} />
-        ))}
+        {data.length !== 0 ? (
+          data.map(commitment => (
+            <CommitmentsTableRow key={commitment.id} commitment={commitment} />
+          ))
+        ) : (
+          <NoDataTableRow />
+        )}
       </tbody>
     </table>
   </div>
