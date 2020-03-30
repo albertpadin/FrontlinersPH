@@ -51,6 +51,8 @@ module.exports = {
           '@layouts': 'src/layouts',
           '@styles': 'src/styles',
           '@hooks': 'src/hooks',
+          '@images': 'src/images',
+          '@assets': 'src/assets',
         },
         extensions: ['js'],
       },
@@ -64,6 +66,15 @@ module.exports = {
             variants: [`400`, `600`, `700`],
           },
         ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        options: {
+          name: 'svg',
+          path: `${__dirname}/src/assets/svg`,
+        },
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

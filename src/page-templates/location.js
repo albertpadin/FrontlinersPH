@@ -3,6 +3,7 @@ import { navigate, Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import sortBy from 'lodash/sortBy';
 import { Card, CardTitle, CardSubtitle, Col, Row, Button } from 'reactstrap';
+import BackIcon from '@assets/svg/back.svg';
 
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
@@ -102,7 +103,10 @@ const LocationTemplate = ({ location }) => {
       <Row className="mt-5">
         <Col md={4}>
           <Link to="" className={style.backLink}>
-            &lt; Go back to home page
+            <span>
+              <BackIcon></BackIcon>
+            </span>{' '}
+            Go Back to Home Page
           </Link>
           <Card className="p-3 mt-3">
             <CardTitle>
