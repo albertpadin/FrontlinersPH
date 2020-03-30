@@ -77,6 +77,12 @@ const LocationFormModal = ({ isShow, toggle }) => {
                 Select location type
               </option>
               <option value="HOSPITAL">Hospital</option>
+              <option value="BARANGAY_HEALTH_WORKER">Hospital</option>
+              <option value="ERUF">ERUF</option>
+              <option value="ARI_TRIAGE_CENTER">ARI Triage Center</option>
+              <option value="BARANGAY_TRIAGE_CENTER">
+                Barangay Triage Center
+              </option>
               <option value="PRODUCTION_HUB">Production Hub</option>
               <option value="KITCHEN">Kitchen</option>
               <option value="QUARANTINE_AREA">Quarantine Area</option>
