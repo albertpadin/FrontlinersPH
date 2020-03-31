@@ -21,6 +21,15 @@ const LocationCardStats = ({ type, stats }) => {
   const label = NEED_TYPE_CHOICES.find(({ value }) => value === type).label;
   const progress = (stats.commitments / stats.requests) * 100;
 
+  const progressColor = () => {
+    if (progress <= 50) {
+      return 'danger';
+    } else if (progress <= 99) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+  };
   return (
     <>
       <Row className="d-flex justify-content-between">
@@ -28,7 +37,10 @@ const LocationCardStats = ({ type, stats }) => {
           <span className={style.statsTitle}>{label}</span>
         </Col>
       </Row>
-      <Progress value={progress === Infinity ? 100 : progress} />
+      <Progress
+        value={progress === Infinity ? 100 : progress}
+        color={progressColor()}
+      />
       <Row>
         <Col className={`mt-1 text-right ${style.stats}`}>
           {stats.commitments} commitments to {stats.requests} requests
