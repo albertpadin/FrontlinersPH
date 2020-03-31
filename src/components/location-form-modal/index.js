@@ -107,7 +107,7 @@ const LocationFormModal = ({ isShow, toggle }) => {
                 <AvFeedback>Please enter city/municipality</AvFeedback>
               </AvGroup>
             </Col>
-            <Col>
+            <Col xs="12" md="6">
               <AvGroup>
                 <Label for="province">Province</Label>
                 <AvInput
