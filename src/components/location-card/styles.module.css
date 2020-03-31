@@ -41,3 +41,9 @@
 .stats {
   font-size: 0.625rem;
 }
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .locationDiv {
+    top: 5px;
+  }
+}
