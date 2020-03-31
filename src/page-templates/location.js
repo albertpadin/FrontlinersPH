@@ -66,6 +66,24 @@ const watchLocationCommitments = (id, callback) => {
     });
 };
 
+const RevisionCard = (props) => {
+  return <Card className={style.revisionElement}>
+    <Row>
+      <Col md={4}>
+        <img 
+          src={props.imageSrc}
+          className={style.revisionElementImage}
+        />
+      </Col>
+      <Col md={8} className={style.revisionElementDetails}>
+        <span className={style.revisionElementName}>{props.revisionName}</span>
+        <span className={style.revisionElementDate}>{props.revisionDate}</span>
+        <span className={style.revisionElementUpdates}>{props.revisionUpdates}</span>
+      </Col>
+    </Row>
+  </Card>
+}
+
 const LocationTemplate = ({ location }) => {
   const user = useFirebaseUser();
 
@@ -141,6 +159,31 @@ const LocationTemplate = ({ location }) => {
             ) : (
               <span class="text-gray-500">No statistics yet.</span>
             )}
+          </Card>
+          <Card className="mt-5">
+            <CardTitle>
+              <h3 className={style.revision}>
+                Revision History
+              </h3>
+            </CardTitle>
+            <RevisionCard
+              imageSrc="https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70"
+              revisionName="King Joshua Montayre"
+              revisionDate="Feb 11, 2020 10:11AM"
+              revisionUpdates="Updates: Power: No Power >> Power Restored"
+            />
+            <RevisionCard
+              imageSrc="https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70"
+              revisionName="King Joshua Montayre"
+              revisionDate="Feb 11, 2020 10:11AM"
+              revisionUpdates="Updates: Power: No Power >> Power Restored"
+            />
+            <RevisionCard
+              imageSrc="https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70"
+              revisionName="King Joshua Montayre"
+              revisionDate="Feb 11, 2020 10:11AM"
+              revisionUpdates="Updates: Power: No Power >> Power Restored"
+            />
           </Card>
         </Col>
         <Col md={8} className="mt-5">
