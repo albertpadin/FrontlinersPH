@@ -40,7 +40,7 @@ const CommitmentsTable = ({ data }) => (
             <CommitmentsTableRow key={commitment.id} commitment={commitment} />
           ))
         ) : (
-          <NoDataTableRow />
+          <NoDataTableRow>No donations yet. Add your donations!</NoDataTableRow>
         )}
       </tbody>
     </table>

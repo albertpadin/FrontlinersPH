@@ -1,10 +1,10 @@
 import React from 'react';
 
-const NoDataTableRow = () => {
+const NoDataTableRow = props => {
   return (
     <tr>
-      <td className="text-center" colSpan="5">
-        No data available
+      <td className="text-center text-gray-500" colSpan="5">
+        {props.children}
       </td>
     </tr>
   );
