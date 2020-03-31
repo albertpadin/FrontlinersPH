@@ -723,15 +723,47 @@ h1 {
 }
 
 .btn-primary {
-  background-color: #2051DB;
-  border-color: #2051DB;
+  background-color: #2051db;
+  border-color: #2051db;
 }
 
 .progress-bar {
-  background-color: #60A1EC;
+  background-color: #60a1ec;
 }
 
 .btn-info {
-  background-color: #2653B6;
-  border-color: #2653B6;
+  background-color: #2653b6;
+  border-color: #2653b6;
+}
+
+.modal-header {
+  border-bottom: none;
+  justify-content: center;
+  align-center: center;
+  padding: 2.75rem 1rem 1rem 1rem;
+}
+
+.modal-header .close {
+  padding: 0;
+  margin: 0 1.25rem 0 0;
+  position: absolute;
+  right: 0;
+}
+
+@media screen and (min-width: 1080px) {
+  .modal-body {
+    padding: 1rem 5rem 2.75rem 5rem;
+    font-size: 0.875rem;
+  }
+}
+
+.modal-body .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modal-body .btn {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: bold;
+  padding: 0.7rem 0.75rem;
 }
