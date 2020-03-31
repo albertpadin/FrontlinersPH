@@ -57,7 +57,7 @@ const LocationFormModal = ({ isShow, toggle }) => {
 
   return (
     <Modal isOpen={isShow} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add a Location</ModalHeader>
+      <ModalHeader toggle={toggle}>ADD LOCATION FORM</ModalHeader>
       <ModalBody>
         <AvForm onValidSubmit={handleSubmit}>
           <AvGroup>

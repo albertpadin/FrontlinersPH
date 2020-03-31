@@ -136,7 +136,11 @@ const LocationTemplate = ({ location }) => {
             </CardSubtitle>
             <hr />
             <span className={`${style.statsTitle}`}>Statistics</span>
-            {data && <LocationStatistics data={data.statistics} />}
+            {data && data.statistics ? (
+              <LocationStatistics data={data.statistics} />
+            ) : (
+              <span class="text-gray-500">No statistics yet.</span>
+            )}
           </Card>
         </Col>
         <Col md={8} className="mt-5">

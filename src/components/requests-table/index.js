@@ -40,7 +40,9 @@ const RequestsTable = ({ data }) => {
               <RequestsTableRow key={request.id} request={request} />
             ))
           ) : (
-            <NoDataTableRow />
+            <NoDataTableRow>
+              No requests yet. Add your request so people will know what to give
+            </NoDataTableRow>
           )}
         </tbody>
       </table>
