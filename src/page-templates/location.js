@@ -40,6 +40,20 @@ const watchLocationData = (id, callback) => {
     .onSnapshot(snapshot => callback(snapshot.data()));
 };
 
+const watchLocationRevisions = (id, callback) => {
+  let data = [];
+
+  firebase
+    .firestore()
+    .collection('revisions')
+    .where('data.location', '==', id)
+    .onSnapshot(snapshot => {
+      data = handleSnapshotChanges(data, snapshot);
+      console.log("Revisions:", data);
+      callback(data);
+    });
+}
+
 const watchLocationRequests = (id, callback) => {
   let data = [];
 
@@ -67,21 +81,23 @@ const watchLocationCommitments = (id, callback) => {
 };
 
 const RevisionCard = (props) => {
-  return <Card className={style.revisionElement}>
-    <Row>
-      <Col md={4}>
-        <img 
-          src={props.imageSrc}
-          className={style.revisionElementImage}
-        />
-      </Col>
-      <Col md={8} className={style.revisionElementDetails}>
-        <span className={style.revisionElementName}>{props.revisionName}</span>
-        <span className={style.revisionElementDate}>{props.revisionDate}</span>
-        <span className={style.revisionElementUpdates}>{props.revisionUpdates}</span>
-      </Col>
-    </Row>
-  </Card>
+  return (
+    <Card className={style.revisionElement}>
+      <Row className={style.revisionElementRow}>
+        <Col xs={4} className={style.revisionElementImageColumn}>
+          <img 
+            src={props.imageSrc}
+            className={style.revisionElementImage}
+          />
+        </Col>
+        <Col xs={8} className={style.revisionElementDetails}>
+          <span className={style.revisionElementName}>{props.revisionName}</span>
+          <span className={style.revisionElementDate}>{props.revisionDate}</span>
+          <span className={style.revisionElementUpdates}>{props.revisionUpdates}</span>
+        </Col>
+      </Row>
+    </Card>
+  )
 }
 
 const LocationTemplate = ({ location }) => {
@@ -90,6 +106,7 @@ const LocationTemplate = ({ location }) => {
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
   const [commitments, setCommitments] = useState(null);
+  const [revision, setRevisions] = useState(null);
   const [isShowRequestModal, setIsShowRequestModal] = useState(false);
   const [isShowCommitmentModal, setIsShowCommitmentModal] = useState(false);
 
@@ -126,6 +143,7 @@ const LocationTemplate = ({ location }) => {
     });
     watchLocationRequests(id, setRequests);
     watchLocationCommitments(id, setCommitments);
+    watchLocationRevisions(id, setRevisions)
   }, [id]);
 
   let locationDetails = <Loader />;
@@ -160,7 +178,7 @@ const LocationTemplate = ({ location }) => {
               <span class="text-gray-500">No statistics yet.</span>
             )}
           </Card>
-          <Card className="mt-5">
+          <Card className="mt-5 pb-5">
             <CardTitle>
               <h3 className={style.revision}>
                 Revision History
