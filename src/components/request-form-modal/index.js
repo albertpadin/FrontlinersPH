@@ -78,7 +78,7 @@ const RequestFormModal = ({ isShow, toggle, location, locationName }) => {
       <ModalBody>
         <AvForm onValidSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="locationName">What's your location?</Label>
+            <Label for="locationName">Beneficiary/Hospital Name</Label>
             <Input
               type="text"
               name="locationName"

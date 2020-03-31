@@ -20,7 +20,6 @@ const RequestsTableRow = ({ request }) => {
 };
 
 const RequestsTable = ({ data }) => {
-  console.log(data);
   return (
     <div className="table-responsive">
       <table>
