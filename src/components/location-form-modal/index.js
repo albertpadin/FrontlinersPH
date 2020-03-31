@@ -61,11 +61,11 @@ const LocationFormModal = ({ isShow, toggle }) => {
       <ModalBody>
         <AvForm onValidSubmit={handleSubmit}>
           <AvGroup>
-            <Label for="name">What’s the name of your location?</Label>
+            <Label for="name">Beneficiary/Hospital Name</Label>
             <AvInput
               type="text"
               name="name"
-              placeholder="Enter location"
+              placeholder="Enter Beneficiary/Hospital Name"
               required
             />
             <AvFeedback>Please enter your location</AvFeedback>

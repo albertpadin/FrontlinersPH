@@ -44,6 +44,10 @@
 
 @media (max-width: 991px) and (min-width: 768px) {
   .locationDiv {
-    top: 5px;
+    bottom: 10px;
+  }
+
+  .locationTitle {
+    font-size: 16px;
   }
 }
