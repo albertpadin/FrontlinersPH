@@ -11,13 +11,15 @@ exports.locationRevisions = functions.firestore
   .document('locations/{lid}/revisions/{rid}')
   .onCreate(async snapshot => {
     // Get the parent location document from the revision sub-document.
-    const locationRef = snapshot.ref.parent.parent;
-    const locationSnapshot = await locationRef.get();
-    const locationData = locationSnapshot.data();
-    const revisionData = snapshot.data();
+    await db.runTransaction(async t => {
+      const locationRef = snapshot.ref.parent.parent;
+      const locationSnapshot = await t.get(locationRef);
+      const locationData = locationSnapshot.data();
+      const revisionData = snapshot.data();
 
-    // Set the location's latest revision to the newly-crated document.
-    await locationRef.set({ ...locationData, ...revisionData });
+      // Set the location's latest revision to the newly-crated document.
+      t.set(locationRef, { ...locationData, ...revisionData });
+    });
   });
 
 exports.commitmentRevisions = functions.firestore
@@ -26,7 +28,7 @@ exports.commitmentRevisions = functions.firestore
     await db.runTransaction(async t => {
       // Get the parent commitment document from the revision sub-document.
       const commitmentRef = snapshot.ref.parent.parent;
-      const commitmentSnapshot = await commitmentRef.get();
+      const commitmentSnapshot = await t.get(commitmentRef);
       const commitmentData = commitmentSnapshot.data();
 
       const revisionData = snapshot.data();
@@ -34,7 +36,7 @@ exports.commitmentRevisions = functions.firestore
 
       const locationId = revisionData.data.location;
       const locationRef = db.doc(`locations/${locationId}`);
-      const locationSnapshot = await locationRef.get();
+      const locationSnapshot = await t.get(locationRef);
       const locationData = locationSnapshot.data();
 
       // Update statistics for this commitment type
@@ -57,8 +59,8 @@ exports.commitmentRevisions = functions.firestore
         revisionData.data.quantity
       );
 
-      await commitmentRef.set(revisionData);
-      await locationRef.update({ statistics });
+      t.set(commitmentRef, revisionData);
+      t.update(locationRef, { statistics });
     });
   });
 
@@ -68,7 +70,7 @@ exports.requestRevisions = functions.firestore
     await db.runTransaction(async t => {
       // Get the parent request document from the revision sub-document.
       const requestRef = snapshot.ref.parent.parent;
-      const requestSnapshot = await requestRef.get();
+      const requestSnapshot = await t.get(requestRef);
       const requestData = requestSnapshot.data();
 
       const revisionData = snapshot.data();
@@ -76,7 +78,7 @@ exports.requestRevisions = functions.firestore
 
       const locationId = revisionData.data.location;
       const locationRef = db.doc(`locations/${locationId}`);
-      const locationSnapshot = await locationRef.get();
+      const locationSnapshot = await t.get(locationRef);
       const locationData = locationSnapshot.data();
 
       // Update statistics for this commitment type
@@ -95,8 +97,8 @@ exports.requestRevisions = functions.firestore
       }
       statistics[requestType].requests += parseInt(revisionData.data.quantity);
 
-      await requestRef.set(revisionData);
-      await locationRef.update({ statistics });
+      t.set(requestRef, revisionData);
+      t.update(locationRef, { statistics });
     });
   });
 
@@ -111,15 +113,19 @@ exports.commitmentDeletions = functions.firestore
     await batch.commit();
 
     // Deduct commitment amount from location statistics.
-    const revisionData = snapshot.data();
-    const requestType = revisionData.data.type;
-    const locationId = revisionData.data.location;
-    const locationRef = db.doc(`locations/${locationId}`);
-    const locationSnapshot = await locationRef.get();
-    const locationData = locationSnapshot.data();
-    const statistics = get(locationData, 'statistics', {});
-    statistics[requestType].commitments -= parseInt(revisionData.data.quantity);
-    await locationRef.update({ statistics });
+    await db.runTransaction(async t => {
+      const revisionData = snapshot.data();
+      const requestType = revisionData.data.type;
+      const locationId = revisionData.data.location;
+      const locationRef = db.doc(`locations/${locationId}`);
+      const locationSnapshot = await t.get(locationRef);
+      const locationData = locationSnapshot.data();
+      const statistics = get(locationData, 'statistics', {});
+      statistics[requestType].commitments -= parseInt(
+        revisionData.data.quantity
+      );
+      t.update(locationRef, { statistics });
+    });
   });
 
 exports.requestDeletions = functions.firestore
@@ -133,13 +139,15 @@ exports.requestDeletions = functions.firestore
     await batch.commit();
 
     // Deduct commitment amount from location statistics.
-    const revisionData = snapshot.data();
-    const requestType = revisionData.data.type;
-    const locationId = revisionData.data.location;
-    const locationRef = db.doc(`locations/${locationId}`);
-    const locationSnapshot = await locationRef.get();
-    const locationData = locationSnapshot.data();
-    const statistics = get(locationData, 'statistics', {});
-    statistics[requestType].requests -= parseInt(revisionData.data.quantity);
-    await locationRef.update({ statistics });
+    await db.runTransaction(async t => {
+      const revisionData = snapshot.data();
+      const requestType = revisionData.data.type;
+      const locationId = revisionData.data.location;
+      const locationRef = db.doc(`locations/${locationId}`);
+      const locationSnapshot = await t.get(locationRef);
+      const locationData = locationSnapshot.data();
+      const statistics = get(locationData, 'statistics', {});
+      statistics[requestType].requests -= parseInt(revisionData.data.quantity);
+      t.update(locationRef, { statistics });
+    });
   });
