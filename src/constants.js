@@ -4,7 +4,7 @@ export const NEED_TYPE_CHOICES = [
   { value: 'BATTERIS', label: 'Batteries' },
   { value: 'BOOTIES', label: 'Booties' },
   { value: 'BOUFFANT_HEAD_CAPS', label: 'Bouffant Head Caps' },
-  //{ value: 'CASH', label: 'Cash' }, NOT IN THE LIST
+  { value: 'CASH', label: 'Cash' }, //NOT IN THE LIST
   { value: 'CHLOROX_DISINFECTANT', label: 'Chlorox Disinfectant' },
   { value: 'DETERGENT', label: 'Detergent' },
   { value: 'DISPOSABLE_GOGGLES', label: 'Disposable Goggles' },
@@ -17,11 +17,11 @@ export const NEED_TYPE_CHOICES = [
   { value: 'INFRARED_THERMOMETERS', label: 'Infrared Thermometers' },
   { value: 'ISOLATION_GOWNS', label: 'Isolation Gowns'},
   { value: 'LAB/OPTICAL_GOGGLES', label: 'Lab/Optical Goggles' },
-  //{ value: 'LAB_GOWNS', label: 'Lab Gowns' }, NOT IN THE LIST
+  { value: 'LAB_GOWNS', label: 'Lab Gowns' }, //NOT IN THE LIST
   { value: 'LARYNGOSCOPE_ADULT', label: 'Laryngoscope Adult'},
   { value: 'LATEX_GLOVES', label: 'Latex Gloves' },
   { value: 'LYSOL/DISINFECTANT', label: 'Lysol/Disinfectant' },
-  //{ value: 'MEALS', label: 'Meals' }, NOT IN THE LIST
+  { value: 'MEALS', label: 'Meals' }, //NOT IN THE LIST
   { value: 'MEDICAL_BONNETS', label: 'Medical Bonnets' },
   { value: 'MEDICINE', label: 'Medicine' },
   { value: 'N95_MASKS', label: 'N95 Masks' },
@@ -29,12 +29,12 @@ export const NEED_TYPE_CHOICES = [
   { value: 'OVERALL_SUITS', label: 'Overall Suits' },
   { value: 'PARACETAMOL', label: 'Paracetamol' },
   { value: 'PPES', label: 'PPEs' },
-  //{ value: 'RAW_MATERIALS', label: 'Raw Materials' }, NOT IN THE LIST
+  { value: 'RAW_MATERIALS', label: 'Raw Materials' }, //NOT IN THE LIST
   { value: 'SCRUB_SUIT', label: 'Scrub Suit' },
   { value: 'SHOE_COVERS', label: 'Shoe Covers' },
   { value: 'STERILE_GLOVES', label: 'Sterile Gloves' },
   { value: 'SURGICAL_GLOVES', label: 'Surgical Gloves' },
-  //{ value: 'SUITS', label: 'Suits' }, NOT IN THE LIST
+  { value: 'SUITS', label: 'Suits' }, //NOT IN THE LIST
   { value: 'SURGICAL_MASKS', label: 'Surgical Masks' },
   { value: 'VITAMINS', label: 'Vitamins' },
   { value: 'OTHER', label: 'Other' },
