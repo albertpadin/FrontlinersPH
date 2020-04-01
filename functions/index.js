@@ -99,3 +99,47 @@ exports.requestRevisions = functions.firestore
       await locationRef.update({ statistics });
     });
   });
+
+exports.commitmentDeletions = functions.firestore
+  .document('commitments/{cid}')
+  .onDelete(async snapshot => {
+    // Delete revisions subcollection.
+    const revisionsRef = snapshot.ref.collection('revisions');
+    const revisionsSnapshot = await revisionsRef.get();
+    const batch = db.batch();
+    revisionsSnapshot.docs.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+
+    // Deduct commitment amount from location statistics.
+    const revisionData = snapshot.data();
+    const requestType = revisionData.data.type;
+    const locationId = revisionData.data.location;
+    const locationRef = db.doc(`locations/${locationId}`);
+    const locationSnapshot = await locationRef.get();
+    const locationData = locationSnapshot.data();
+    const statistics = get(locationData, 'statistics', {});
+    statistics[requestType].commitments -= parseInt(revisionData.data.quantity);
+    await locationRef.update({ statistics });
+  });
+
+exports.requestDeletions = functions.firestore
+  .document('requests/{rid}')
+  .onDelete(async snapshot => {
+    // Delete revisions subcollection.
+    const revisionsRef = snapshot.ref.collection('revisions');
+    const revisionsSnapshot = await revisionsRef.get();
+    const batch = db.batch();
+    revisionsSnapshot.docs.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+
+    // Deduct commitment amount from location statistics.
+    const revisionData = snapshot.data();
+    const requestType = revisionData.data.type;
+    const locationId = revisionData.data.location;
+    const locationRef = db.doc(`locations/${locationId}`);
+    const locationSnapshot = await locationRef.get();
+    const locationData = locationSnapshot.data();
+    const statistics = get(locationData, 'statistics', {});
+    statistics[requestType].requests -= parseInt(revisionData.data.quantity);
+    await locationRef.update({ statistics });
+  });
