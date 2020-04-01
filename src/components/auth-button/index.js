@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 import useFirebaseUser from '@hooks/use-firebase-user';
 
 const AuthButton = ({ onLogin, onLogout, loading }) => {
-  const user = useFirebaseUser();
+  const { user } = useFirebaseUser();
 
   return user ? (
     <Button color="primary" onClick={onLogout} disabled={loading}>

@@ -67,7 +67,7 @@ const watchLocationCommitments = (id, callback) => {
 };
 
 const LocationTemplate = ({ location }) => {
-  const user = useFirebaseUser();
+  const { user } = useFirebaseUser();
 
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);

@@ -23,7 +23,7 @@ import useFirebaseUser from '@hooks/use-firebase-user';
 import { NEED_TYPE_CHOICES, UNIT_CHOICES } from '@src/constants';
 
 const RequestFormModal = ({ isShow, toggle, location, locationName }) => {
-  const user = useFirebaseUser();
+  const { user } = useFirebaseUser();
   const defaults = {
     location,
     type: '',

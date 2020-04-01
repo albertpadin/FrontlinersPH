@@ -20,7 +20,7 @@ import firebase from 'gatsby-plugin-firebase';
 import useFirebaseUser from '@hooks/use-firebase-user';
 
 const LocationFormModal = ({ isShow, toggle }) => {
-  const user = useFirebaseUser();
+  const { user } = useFirebaseUser();
   const [loading, setLoading] = React.useState(false);
 
   const addLocation = async data => {
