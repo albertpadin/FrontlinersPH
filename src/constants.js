@@ -16,7 +16,7 @@ export const NEED_TYPE_CHOICES = [
   { value: 'HEAD_COVER', label: 'Head Cover'},
   { value: 'INFRARED_THERMOMETERS', label: 'Infrared Thermometers' },
   { value: 'ISOLATION_GOWNS', label: 'Isolation Gowns'},
-  { value: 'LAB/OPTICAL_GOGGLES', label: 'Lab/Optical Goggles' },
+  { value: 'LAB_GOGGLES', label: 'Lab Goggles' }, //IN THE LIST IT'S 'Lab/Optical Goggles'
   { value: 'LAB_GOWNS', label: 'Lab Gowns' }, //NOT IN THE LIST
   { value: 'LARYNGOSCOPE_ADULT', label: 'Laryngoscope Adult'},
   { value: 'LATEX_GLOVES', label: 'Latex Gloves' },
