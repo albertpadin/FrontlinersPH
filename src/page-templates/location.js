@@ -66,6 +66,27 @@ const watchLocationCommitments = (id, callback) => {
     });
 };
 
+const deleteLocation = id => {
+  firebase
+    .firestore()
+    .doc(`locations/${id}`)
+    .delete();
+};
+
+const deleteRequest = id => {
+  firebase
+    .firestore()
+    .doc(`requests/${id}`)
+    .delete();
+};
+
+const deleteCommitment = id => {
+  firebase
+    .firestore()
+    .doc(`commitments/${id}`)
+    .delete();
+};
+
 const LocationTemplate = ({ location }) => {
   const { user, isAdmin } = useFirebaseUser();
 
@@ -142,6 +163,10 @@ const LocationTemplate = ({ location }) => {
               <span class="text-gray-500">No statistics yet.</span>
             )}
           </Card>
+
+          {isAdmin && (
+            <button onClick={() => deleteLocation(id)}>Delete Location</button>
+          )}
         </Col>
         <Col md={8} className="mt-5">
           <Row>
@@ -161,7 +186,13 @@ const LocationTemplate = ({ location }) => {
               )}
             </Col>
           </Row>
-          {requests && <RequestsTable data={requests} />}
+          {requests && (
+            <RequestsTable
+              data={requests}
+              canDelete={isAdmin}
+              onDelete={deleteRequest}
+            />
+          )}
 
           <Row className="mt-5">
             <Col>
@@ -180,7 +211,13 @@ const LocationTemplate = ({ location }) => {
               )}
             </Col>
           </Row>
-          {commitments && <CommitmentsTable data={commitments} />}
+          {commitments && (
+            <CommitmentsTable
+              data={commitments}
+              canDelete={isAdmin}
+              onDelete={deleteCommitment}
+            />
+          )}
         </Col>
       </Row>
     );
