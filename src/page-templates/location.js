@@ -174,16 +174,14 @@ const LocationTemplate = ({ location }) => {
               <h3>Requests</h3>
             </Col>
             <Col className="d-flex justify-content-end">
-              {isAdmin && (
-                <Button
-                  color="primary"
-                  size="sm"
-                  className={style.addButton}
-                  onClick={toggleRequestModal}
-                >
-                  Add a request
-                </Button>
-              )}
+              <Button
+                color="primary"
+                size="sm"
+                className={style.addButton}
+                onClick={toggleRequestModal}
+              >
+                Add a request
+              </Button>
             </Col>
           </Row>
           {requests && (
@@ -199,16 +197,14 @@ const LocationTemplate = ({ location }) => {
               <h3>Donations</h3>
             </Col>
             <Col className="d-flex justify-content-end">
-              {isAdmin && (
-                <Button
-                  color="primary"
-                  size="sm"
-                  className={style.addButton}
-                  onClick={toggleCommitmentModal}
-                >
-                  Add a donation
-                </Button>
-              )}
+              <Button
+                color="primary"
+                size="sm"
+                className={style.addButton}
+                onClick={toggleCommitmentModal}
+              >
+                Add a donation
+              </Button>
             </Col>
           </Row>
           {commitments && (

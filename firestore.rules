@@ -15,7 +15,7 @@ service cloud.firestore {
       allow delete: if isAdmin();
 
       match /revisions/{document=**} {
-        allow create: if isAdmin();
+        allow create: if true;
       }
     }
 
@@ -24,7 +24,7 @@ service cloud.firestore {
       allow delete: if isAdmin();
 
       match /revisions/{document=**} {
-        allow create: if isAdmin();
+        allow create: if true;
       }
     }
 
@@ -33,7 +33,7 @@ service cloud.firestore {
       allow delete: if isAdmin();
 
       match /revisions/{document=**} {
-        allow create: if isAdmin();
+        allow create: if true;
       }
     }
 
