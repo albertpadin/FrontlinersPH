@@ -750,6 +750,49 @@ h1 {
   right: 0;
 }
 
+.privacy-policy h1 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.privacy-policy ul > li {
+  margin-top: 50px;
+  padding-left: 50px;
+  list-style-type: none;
+}
+
+.privacy-policy h2 {
+  margin-top: 50px;
+}
+
+.privacy-policy-footer {
+  display: flex;
+  margin-top: 5em;
+  width: 100%;
+}
+
+.privacy-policy-footer h1 {
+  font-size: 25px;
+}
+
+.privacy-policy-footer h1 > span {
+  display: block;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 50px;
+  width: 600px;
+}
+
+.privacy-policy-footer .footer-title {
+  margin-top: 12em;
+}
+
+.privacy-policy-footer .virus-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 @media screen and (min-width: 1080px) {
   .modal-body {
     padding: 1rem 5rem 2.75rem 5rem;
@@ -770,4 +813,14 @@ h1 {
 
 .text-gray-500 {
   color: #999999;
+}
+
+@media screen and (max-width: 768px) {
+  .privacy-policy-footer {
+    display: block;
+  }
+
+  .footer-title > h1 {
+    font-size: 25px;
+  }
 }

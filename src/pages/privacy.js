@@ -2,12 +2,14 @@ import React from 'react';
 
 import Layout from '@layouts/default';
 import SEO from '@components/seo';
+import NurseSvg from '@assets/svg/nurse.svg';
+import VirusSvg from '@assets/svg/virus.svg';
 
 const PrivacyPage = () => (
   <Layout>
     <SEO title="Privacy Page" />
 
-    <div>
+    <div className="privacy-policy">
       <h1>#FrontlinersPH Privacy Policy</h1>
       <p>
         We understand the value of the data privacy and information we use for
@@ -74,6 +76,21 @@ const PrivacyPage = () => (
         If you have any questions or concerns about our use of information, feel
         free to contact us.{' '}
       </p>
+    </div>
+    <div className="privacy-policy-footer">
+      <div className="footer-title">
+        <h1>JOIN THE FIGHT</h1>
+        <h1>
+          <span>THEY SAVE US,</span>
+          <span>LET'S PROTECT THEM</span>
+        </h1>
+      </div>
+      <div className="nurse-svg">
+        <NurseSvg width="700px" height="600px" />
+      </div>
+      <div className="virus-svg">
+        <VirusSvg width="500px" height="500px" />
+      </div>
     </div>
   </Layout>
 );
