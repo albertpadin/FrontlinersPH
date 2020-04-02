@@ -23,7 +23,7 @@ import RequestFormModal from '../request-form-modal';
 import useFirebaseUser from '@hooks/use-firebase-user';
 
 const CommitmentFormModal = ({ isShow, toggle, location }) => {
-  const user = useFirebaseUser();
+  const { user } = useFirebaseUser();
   const defaults = {
     location,
     type: '',

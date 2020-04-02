@@ -67,7 +67,7 @@ const watchLocationCommitments = (id, callback) => {
 };
 
 const LocationTemplate = ({ location }) => {
-  const user = useFirebaseUser();
+  const { user, isAdmin } = useFirebaseUser();
 
   const [data, setData] = useState(null);
   const [requests, setRequests] = useState(null);
@@ -149,14 +149,16 @@ const LocationTemplate = ({ location }) => {
               <h3>Requests</h3>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Button
-                color="primary"
-                size="sm"
-                className={style.addButton}
-                onClick={toggleRequestModal}
-              >
-                Add a request
-              </Button>
+              {isAdmin && (
+                <Button
+                  color="primary"
+                  size="sm"
+                  className={style.addButton}
+                  onClick={toggleRequestModal}
+                >
+                  Add a request
+                </Button>
+              )}
             </Col>
           </Row>
           {requests && <RequestsTable data={requests} />}
@@ -166,14 +168,16 @@ const LocationTemplate = ({ location }) => {
               <h3>Donations</h3>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Button
-                color="primary"
-                size="sm"
-                className={style.addButton}
-                onClick={toggleCommitmentModal}
-              >
-                Add a donation
-              </Button>
+              {isAdmin && (
+                <Button
+                  color="primary"
+                  size="sm"
+                  className={style.addButton}
+                  onClick={toggleCommitmentModal}
+                >
+                  Add a donation
+                </Button>
+              )}
             </Col>
           </Row>
           {commitments && <CommitmentsTable data={commitments} />}
