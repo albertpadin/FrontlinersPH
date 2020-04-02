@@ -86,7 +86,7 @@ const PrivacyPage = () => (
         </h1>
       </div>
       <div className="nurse-svg">
-        <NurseSvg width="700px" height="600px" />
+        <NurseSvg />
       </div>
       <div className="virus-svg">
         <VirusSvg width="500px" height="500px" />
