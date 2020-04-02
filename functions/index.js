@@ -102,6 +102,34 @@ exports.requestRevisions = functions.firestore
     });
   });
 
+exports.locationDeletions = functions.firestore
+  .document('locations/{lid}')
+  .onDelete(async snapshot => {
+    // Delete revisions subcollection.
+    const revisionsRef = snapshot.ref.collection('revisions');
+    const revisionsSnapshot = await revisionsRef.get();
+    const locationBatch = db.batch();
+    revisionsSnapshot.docs.forEach(doc => locationBatch.delete(doc.ref));
+    await locationBatch.commit();
+
+    // Delete requests and commitments for the deleted location.
+    const requestsQuery = db
+      .collection('requests')
+      .where('data.location', '==', snapshot.id);
+    const commitmentsQuery = db
+      .collection('commitments')
+      .where('data.location', '==', snapshot.id);
+
+    await db.runTransaction(async t => {
+      const [requestsSnapshot, commitmentsSnapshot] = await Promise.all([
+        t.get(requestsQuery),
+        t.get(commitmentsQuery),
+      ]);
+      requestsSnapshot.docs.forEach(doc => t.delete(doc.ref));
+      commitmentsSnapshot.docs.forEach(doc => t.delete(doc.ref));
+    });
+  });
+
 exports.commitmentDeletions = functions.firestore
   .document('commitments/{cid}')
   .onDelete(async snapshot => {
@@ -119,12 +147,14 @@ exports.commitmentDeletions = functions.firestore
       const locationId = revisionData.data.location;
       const locationRef = db.doc(`locations/${locationId}`);
       const locationSnapshot = await t.get(locationRef);
-      const locationData = locationSnapshot.data();
-      const statistics = get(locationData, 'statistics', {});
-      statistics[requestType].commitments -= parseInt(
-        revisionData.data.quantity
-      );
-      t.update(locationRef, { statistics });
+      if (locationSnapshot.exists) {
+        const locationData = locationSnapshot.data();
+        const statistics = get(locationData, 'statistics', {});
+        statistics[requestType].commitments -= parseInt(
+          revisionData.data.quantity
+        );
+        t.update(locationRef, { statistics });
+      }
     });
   });
 
@@ -145,9 +175,13 @@ exports.requestDeletions = functions.firestore
       const locationId = revisionData.data.location;
       const locationRef = db.doc(`locations/${locationId}`);
       const locationSnapshot = await t.get(locationRef);
-      const locationData = locationSnapshot.data();
-      const statistics = get(locationData, 'statistics', {});
-      statistics[requestType].requests -= parseInt(revisionData.data.quantity);
-      t.update(locationRef, { statistics });
+      if (locationSnapshot.exists) {
+        const locationData = locationSnapshot.data();
+        const statistics = get(locationData, 'statistics', {});
+        statistics[requestType].requests -= parseInt(
+          revisionData.data.quantity
+        );
+        t.update(locationRef, { statistics });
+      }
     });
   });
