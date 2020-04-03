@@ -1,45 +1,133 @@
 .locationDiv {
   bottom: 25px;
+  z-index: 1;
 }
 
 .locationTitle {
   color: #ffffff;
-  font-weight: 700;
-  padding: 0px 20px;
-  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px 20px;
 }
 
 .locationSubtitle {
-  color: #ffffff;
-  font-size: 0.75rem;
-  font-weight: 600;
+  color: #FFCF5C;
+  font-size: 0.70rem;
+  font-weight: 500;
   padding-left: 20px;
+  margin: 8px 0px;
   text-transform: uppercase;
 }
 
 .locationImage {
   margin-bottom: 0px;
+  min-height: 150px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.locationUpdate{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0.5rem 1.25rem;
+  border-bottom: 1px solid rgba(228, 228, 228, 0.6);
+}
+
+.locationStatus{
+  color: #00B347;
+  font-size: 0.70rem;
+  font-weight: 500;
+  margin: 0 4px;
+}
+
+.locationTimestamp{
+  color: #999999;
+  font-size: 0.70rem;
+  font-weight: 500;
+}
+
+.clockIcon {
+  color: #00B347;
+  display: flex;
+  align-items: center;
+  font-size: 0.5rem;
+}
+
+.clockIcon svg {
+  fill: currentColor;
 }
 
 .statsBody {
-  padding-bottom: 1.75rem;
+  padding: 1.15rem 0;
+}
+
+.statsCount {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  font-size: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .statsDiv {
-  min-height: 150px;
-  max-height: 150px;
+  min-height: 180px;
+  max-height: 180px;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .statsTitle {
-  text-transform: uppercase;
   font-size: 0.75rem;
   font-weight: 700;
 }
 
 .stats {
   font-size: 0.625rem;
+}
+
+.statsFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 14px;
+  border-bottom-left-radius: 40px !important;
+  border-bottom-right-radius: 40px !important;
+}
+
+.statsFooter svg{
+  fill: currentColor;
+  margin-left: 14px;
+}
+
+.statsFooter:hover{
+  text-decoration: none;
+}
+
+.statsLink:hover{
+  text-decoration: none;
+}
+
+.statsDiv::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F7F7F7;
+}
+
+.statsDiv::-webkit-scrollbar
+{
+  width: 8px;
+	background-color: #F7F7F7;
+}
+
+.statsDiv::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #e8e8e8;
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
