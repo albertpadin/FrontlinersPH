@@ -101,11 +101,15 @@
 
 .statsFooter svg{
   fill: currentColor;
-  margin-left: 14px;
+  margin-left: 12px;
 }
 
 .statsFooter:hover{
   text-decoration: none;
+}
+
+.statsLink{
+  font-size: 0.85rem;
 }
 
 .statsLink:hover{
