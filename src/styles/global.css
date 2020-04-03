@@ -784,13 +784,14 @@ h1 {
 }
 
 .privacy-policy-footer .footer-title {
-  margin-top: 12em;
+  margin-top: 11em;
 }
 
 .privacy-policy-footer .virus-svg {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 
 @media screen and (min-width: 1080px) {
@@ -820,7 +821,7 @@ h1 {
     display: block;
   }
 
-  .footer-title > h1 {
-    font-size: 25px;
+  .privacy-policy-footer h1 > span {
+    font-size: 35px;
   }
 }
